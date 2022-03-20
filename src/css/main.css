@@ -1,0 +1,55 @@
+@define-color main rgba(29, 31, 33, 1); /* #1d1f21 */
+@define-color main_hover rgba(40, 43, 45, 1); /* #282b2d */
+@define-color main_active rgba(51, 55, 58, 1); /* #33373a */
+@define-color uri rgba(40, 42, 46, 1); /* #282a2e */
+@define-color uri_hover rgba(53, 55, 61, 1); /* #35373d */
+@define-color text rgba(171, 173, 172, 1); /* #abadac */
+@define-color text_hl rgba(70, 71, 70, 1); /* #464746 */
+
+* {
+	color: @text;
+	background-color: @main;
+	min-width: 0px;
+	min-height: 0px;
+}
+
+#bar_uri_entry {
+	background-color: @uri;
+	box-shadow: 0 0 1px @uri_hover;
+	border: 0px;
+	border-radius: 7px;
+
+	color: @text;
+	font-family: "JetBrainsMono Nerd Font", sans-serif;
+	font-weight: bold;
+	caret-color: @text;
+}
+
+*:disabled {
+	background-color: #cc6666;
+}
+
+button {
+	-gtk-icon-shadow: none;
+	background-image: none;
+	border: none;
+}
+
+button:hover {
+	box-shadow: 0 0 3px @main_active;
+}
+
+button:active {
+	box-shadow: 0 0 10px @main_active;
+}
+
+menu, menu * {
+	background-color: @uri;
+	border: 0px;
+}
+
+selection {
+	background-color: @text_hl;
+}
+
+

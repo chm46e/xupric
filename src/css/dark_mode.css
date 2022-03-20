@@ -1,0 +1,68 @@
+html,
+body,
+:not([style*="background-color:"]) {
+	/* background color */		
+	background-color: #1d1f21 !important;
+}
+
+* {
+	box-shadow: none !important;
+}
+
+html,
+body,
+:not([style*="color:"]),
+.sr-reader *:not([class*='sr-pivot']) {
+	/* general text color */
+	color: #c5c8c6 !important;
+}
+h1:not([style*="color:"]),
+h2:not([style*="color:"]),
+h3:not([style*="color:"]),
+h4:not([style*="color:"]),
+h5:not([style*="color:"]),
+h6:not([style*="color:"]) {
+	/* header text color */
+	color: #c5c8c6 !important;
+}
+cite:not([style*="color:"]) {
+	/* some wierd cite idk */
+	color: #b5bd68 !important;
+}
+input:not([style*="background-color:"]),
+textarea:not([style*="background-color:"]),
+button:not([style*="background-color:"]),
+[role="button"] {
+	/* input/btn/txt background color (looks wierd if different) */
+	background-color: #1d1f21 !important;
+}
+input:not([style*="background-color:"]):hover,
+textarea:not([style*="background-color:"]):hover,
+button:not([style*="background-color:"]):hover,
+[role="button"]:hover {
+	/* input/btn/txt hover color */
+	background-color: rgba(29, 31, 33, 0.8) !important;
+}
+input:not([style*="background-color:"]):active, input:not([style*="background-color:"]):focus,
+textarea:not([style*="background-color:"]):active, textarea:not([style*="background-color:"]):focus,
+button:not([style*="background-color:"]):active, button:not([style*="background-color:"]):focus,
+[role="button"]:active, [role="button"]:focus {
+	/* input/btn/txt active color */
+	background-color: #1d1f21 !important;
+}
+a:not([style*="color:"]) {
+	/* link color */
+	color: #e3e5e3 !important;
+}
+a:not([style*="color:"]):hover {
+	/* link hover color */
+	color: #e3e5e3 !important;
+}
+a:not([style*="color:"]):active, a:not([style*="color:"]):focus {
+	/* link active color */
+	color: #e3e5e3 !important;
+}
+input:not([style*="background-image:"]),
+textarea:not([style*="background-image:"]) {
+	background-image: none !important;
+}
