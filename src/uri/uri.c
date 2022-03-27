@@ -15,12 +15,14 @@
 #include "uri.h"
 
 static char *search_engine;
+static char *secondary_search_engine;
 
 static char *search_engine_get(char *opt);
 
 extern void uri_init(void)
 {
     search_engine = search_engine_get(cfg_get()[conf_search_engine].s);
+    secondary_search_engine = search_engine_get(cfg_get()[conf_secondary_search_engine].s);
 }
 
 extern void uri_reload(struct frame *f, int bypass)
@@ -47,6 +49,8 @@ static char *search_engine_get(char *opt)
         return strdup("https://start.duckduckgo.com/");
     else if (!(strcmp(opt, "searx")))
         return strdup("https://searx.thegpm.org/");
+    else if (!(strcmp(opt, "webcrawler")))
+	return strdup("https://webcrawler.com/search");
     else if (!(strcmp(opt, "startpage")))
         return strdup("https://www.startpage.com/search");
     else if (!(strcmp(opt, "google")))
@@ -80,7 +84,7 @@ extern void uri_search_engine_load(struct frame *f)
     }
 }
 
-extern void uri_custom_load(struct frame *f, char *uri)
+extern void uri_custom_load(struct frame *f, char *uri, int secondary)
 {
     char *url, *xpath, *rpath;
 
@@ -102,7 +106,10 @@ extern void uri_custom_load(struct frame *f, char *uri)
             url = g_strdup_printf("file://%s", rpath);
             free(rpath);
         } else {
-            url = g_strdup_printf("%s?q=%s", search_engine_get(search_engine), uri);
+            if (secondary)
+                url = g_strdup_printf("%s?q=%s", search_engine_get(secondary_search_engine), uri);
+            else
+                url = g_strdup_printf("%s?q=%s", search_engine_get(search_engine), uri);
         }
         if (xpath != uri)
             free(xpath);

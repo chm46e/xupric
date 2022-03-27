@@ -13,8 +13,8 @@ typedef enum {
     conf_smooth_scrolling, conf_user_agent,
     conf_hardware_accel, conf_cookie_policy,
     conf_itp, conf_tls_error_policy,
-    conf_search_engine, conf_dark_mode,
-    conf_scrollbar,
+    conf_search_engine, conf_secondary_search_engine,
+    conf_dark_mode, conf_scrollbar,
     conf_len
 } conf_opt_name;
 

@@ -43,6 +43,8 @@ extern void frame_list_create(void)
 
     g_signal_connect(gtk_builder_get_object(builder, "bar_uri_entry"), "activate",
         G_CALLBACK(bar_uri_enter_handle), gtk_builder_get_object(builder, "uri_buffer"));
+    g_signal_connect(gtk_builder_get_object(builder, "bar_uri_entry_secondary"), "activate",
+        G_CALLBACK(bar_uri_enter_handle), gtk_builder_get_object(builder, "uri_buffer_secondary"));
 
     win = GTK_WIDGET(gtk_builder_get_object(builder, "main_window"));
     g_signal_connect(win, "destroy", G_CALLBACK(window_close), NULL);

@@ -48,7 +48,8 @@ extern conf_opt *cfg_load(char *name)
         CFG_INT("cookie_policy", 2, CFGF_NONE),
         CFG_BOOL("itp", cfg_true, CFGF_NONE),
         CFG_BOOL("tls_error_policy", cfg_true, CFGF_NONE),
-        CFG_STR("search_engine", "searx", CFGF_NONE),
+        CFG_STR("search_engine", "duckduckgo", CFGF_NONE),
+        CFG_STR("secondary_search_engine", "searx", CFGF_NONE),
         CFG_BOOL("dark_mode", cfg_true, CFGF_NONE),
         CFG_BOOL("scrollbar", cfg_true, CFGF_NONE),
         CFG_END()
@@ -81,6 +82,7 @@ extern conf_opt *cfg_load(char *name)
     config[conf_itp].i = cfg_getbool(cfg, "itp");
     config[conf_tls_error_policy].i = cfg_getbool(cfg, "tls_error_policy");
     config[conf_search_engine].s = strdup(cfg_getstr(cfg, "search_engine"));
+    config[conf_secondary_search_engine].s = strdup(cfg_getstr(cfg, "secondary_search_engine"));
     config[conf_dark_mode].i = cfg_getbool(cfg, "dark_mode");
     config[conf_scrollbar].i = cfg_getbool(cfg, "scrollbar");
 
@@ -96,5 +98,6 @@ extern void cfg_cleanup(void)
     free(config[conf_charset].s);
     free(config[conf_user_agent].s);
     free(config[conf_search_engine].s);
+    free(config[conf_secondary_search_engine].s);
     free(config);
 }

@@ -73,13 +73,20 @@ extern int window_event_handle(GtkWidget *, GdkEvent *ev)
 extern void bar_uri_enter_handle(GtkWidget *b)
 {
     struct frame *f;
+    char *text;
 
     f = current_frame_get();
-    uri_custom_load(f, (char *)gtk_entry_get_text(GTK_ENTRY(b)));
-    gtk_entry_set_text(GTK_ENTRY(b), uri_get(f));
+    text = gtk_entry_get_text(GTK_ENTRY(b));
+
+    if (!(strcmp(gtk_widget_get_name(b), "bar_uri_entry"))) {
+        uri_custom_load(f, text, 0);
+        gtk_entry_set_text(GTK_ENTRY(b), uri_get(f));
+    } else if (!(strcmp(gtk_widget_get_name(b), "bar_uri_entry_secondary"))){
+        uri_custom_load(f, text, 1);
+    }
 }
 
-extern void uri_changed(WebKitWebView *)
+extern void uri_changed(WebKitWebView *v)
 {
     GtkEntry *e;
     char *uri;
@@ -90,6 +97,7 @@ extern void uri_changed(WebKitWebView *)
         gtk_entry_set_text(e, uri);
         current_frame_get()->uri = uri;
     }
+    gtk_widget_grab_focus(v);
 }
 
 extern void uri_load_progress(WebKitWebView *v)
