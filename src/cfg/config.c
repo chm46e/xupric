@@ -24,7 +24,8 @@ char *config_names[] = {
     "styles/dark_mode.css",
     "styles/scrollbar.css",
     "styles/main.css",
-    "main.ui"
+    "main.ui",
+    "bookmarks.db"
 };
 
 char *cache_names[] = {

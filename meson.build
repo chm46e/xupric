@@ -5,18 +5,20 @@ cc = meson.get_compiler('c')
 cfg_lib_dirs = ['/usr/local/lib/', '/usr/lib', '/usr/share/lib']
 cfg_dep = cc.find_library('libconfuse', dirs: cfg_lib_dirs) 
 
+sql_dep = dependency('sqlite3')
+
 gtk_dep = dependency('gtk+-3.0')
 x11_dep = dependency('x11', method: 'pkg-config')
 webkit_dep = dependency('webkit2gtk-4.0', method: 'pkg-config')
 
-src = ['src/sulfer.c', 'src/cfg/cfg.c', 'src/cfg/config.c', 'src/frame/frame.c', 'src/frame/handle.c', 'src/uri/uri.c', 'src/util/util.c', 'src/util/atom.c', 'src/util/path.c']
+src = ['src/sulfer.c', 'src/cfg/cfg.c', 'src/cfg/config.c', 'src/frame/frame.c', 'src/frame/handle.c', 'src/uri/uri.c', 'src/util/util.c', 'src/util/atom.c', 'src/util/path.c', 'src/extras/bookmark.c']
 
 incs = include_directories('src/')
 ldflags = ['-l:libconfuse.a', '-lgthread-2.0']
 
-run_target('cp', command: ['cp', '-f', 'src/main.ui', '~/.config/sulfer/'])
+#run_target('cp', command: ['cp', '-f', 'src/main.ui', '~/.config/sulfer/'])
 
-exec = executable('sulfer', sources: src, dependencies : [gtk_dep, x11_dep, webkit_dep, cfg_dep], include_directories: incs, install: true, build_by_default: true)
+exec = executable('sulfer', sources: src, dependencies : [gtk_dep, x11_dep, webkit_dep, cfg_dep, sql_dep], include_directories: incs, install: true, build_by_default: true)
 
 custom_target('ui', depends: exec,
   input: exec, output: 'main.ui',

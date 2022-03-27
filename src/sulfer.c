@@ -16,6 +16,7 @@
 #include "util/atom.h"
 #include "uri/uri.h"
 #include "cfg/config.h"
+#include "extras/bookmark.h"
 
 static void sigchld();
 static void sighup();
@@ -58,10 +59,12 @@ static void setup(void)
 
     config_cache_create();
     atoms_init();
+    bookmark_init(config_names[9]);
 }
 
 static void cleanup(void)
 {
+    bookmark_cleanup();
     frame_cleanup();
     uri_cleanup();
     config_cache_cleanup();
