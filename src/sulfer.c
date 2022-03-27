@@ -59,7 +59,7 @@ static void setup(void)
 
     config_cache_create();
     atoms_init();
-    bookmark_init(config_names[9]);
+    bookmark_init(config_names[8]);
 }
 
 static void cleanup(void)

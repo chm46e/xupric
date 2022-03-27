@@ -18,6 +18,8 @@
 #include "frame.h"
 #include "handle.h"
 
+#include "main_ui.h"
+
 static conf_opt *config;
 static GtkBuilder *builder;
 static struct frame *frames;
@@ -35,8 +37,7 @@ extern void frame_list_create(void)
 
     frames = ecalloc(10, sizeof(struct frame));
     config = cfg_get();
-    builder = gtk_builder_new();
-    gtk_builder_add_from_file(builder, config_names[8], NULL);
+    builder = gtk_builder_new_from_string((const gchar *)main_ui, main_ui_len);
 
     css = gtk_css_provider_new();
     gtk_css_provider_load_from_path(css, config_names[7], NULL);

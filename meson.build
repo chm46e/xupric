@@ -16,13 +16,19 @@ src = ['src/sulfer.c', 'src/cfg/cfg.c', 'src/cfg/config.c', 'src/frame/frame.c',
 incs = include_directories('src/')
 ldflags = ['-l:libconfuse.a', '-lgthread-2.0']
 
-#run_target('cp', command: ['cp', '-f', 'src/main.ui', '~/.config/sulfer/'])
+custom_target('before_build',
+  output: 'ignore_',
+  command: ['src/sh/before_build.sh'],
+  build_by_default: true
+)
 
 exec = executable('sulfer', sources: src, dependencies : [gtk_dep, x11_dep, webkit_dep, cfg_dep, sql_dep], include_directories: incs, install: true, build_by_default: true)
 
-custom_target('ui', depends: exec,
-  input: exec, output: 'main.ui',
-  command: ['src/sh/install.sh'],
-  build_by_default: true)
+custom_target('after_build',
+  depends: exec,
+  output: 'ignore__',
+  command: ['src/sh/after_build.sh'],
+  build_by_default: true
+)
 
-meson.add_install_script('src/sh/final.sh')
+meson.add_install_script('src/sh/install.sh')
