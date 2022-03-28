@@ -46,6 +46,8 @@ extern void frame_list_create(void)
         G_CALLBACK(bar_uri_enter_handle), gtk_builder_get_object(builder, "uri_buffer"));
     g_signal_connect(gtk_builder_get_object(builder, "bar_uri_entry_secondary"), "activate",
         G_CALLBACK(bar_uri_enter_handle), gtk_builder_get_object(builder, "uri_buffer_secondary"));
+    g_signal_connect(gtk_builder_get_object(builder, "bar_bookmark_button"), "clicked",
+        G_CALLBACK(bookmark_button_toggle_handle), NULL);
 
     win = GTK_WIDGET(gtk_builder_get_object(builder, "main_window"));
     g_signal_connect(win, "destroy", G_CALLBACK(window_close), NULL);

@@ -74,9 +74,8 @@ extern char **bookmark_get(void)
     if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
         die(1, "[ERROR] Unable to get bookmarks: %s\n", sqlite3_errmsg(db));
 
-    for (i = 0; sqlite3_step(stmt) == SQLITE_ROW && i < 1000; i++) {
+    for (i = 0; sqlite3_step(stmt) == SQLITE_ROW && i < 1000; i++)
         books[i] = strdup(sqlite3_column_text(stmt, 0));
-    }
 
     books_len = i;
     sqlite3_finalize(stmt);
@@ -86,6 +85,29 @@ extern char **bookmark_get(void)
 extern char **books_get(void)
 {
     return books;
+}
+
+extern int bookmark_exists(char *book)
+{
+    char *sql;
+    sqlite3_stmt *stmt;
+    int exists = 0;
+
+    sql = ecalloc(1000, sizeof(char *));
+
+    strcpy(sql, "SELECT uri FROM books WHERE uri = \'");
+    strcat(sql, book);
+    strcat(sql, "\';");
+
+    if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
+        die(1, "[ERROR] Unable to get bookmarks: %s\n", sqlite3_errmsg(db));
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+        exists = 1;
+
+    sqlite3_finalize(stmt);
+    free(sql);
+    return exists;
 }
 
 extern void bookmark_cleanup(void)

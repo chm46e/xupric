@@ -10,6 +10,7 @@
 #include "frame.h"
 #include "config.h"
 #include "util/macros.h"
+#include "extras/bookmark.h"
 
 #define CLEANMASK(mask) (mask & (GDK_CONTROL_MASK|GDK_SHIFT_MASK|GDK_SUPER_MASK|GDK_MOD1_MASK))
 
@@ -88,16 +89,43 @@ extern void bar_uri_enter_handle(GtkWidget *b)
 
 extern void uri_changed(WebKitWebView *v)
 {
+    GtkBuilder *builder;
+    GtkImage *bookmark_image;
     GtkEntry *e;
     char *uri;
 
-    e = GTK_ENTRY(gtk_builder_get_object(builder_get(), "bar_uri_entry"));
+    builder = builder_get();
+    e = GTK_ENTRY(gtk_builder_get_object(builder, "bar_uri_entry"));
     uri = uri_get(current_frame_get());
     if (strcmp(gtk_entry_get_text(e), uri)) {
         gtk_entry_set_text(e, uri);
         current_frame_get()->uri = uri;
     }
+
+    bookmark_image = GTK_IMAGE(gtk_builder_get_object(builder, "bookmark_image"));
+    if (bookmark_exists(uri))
+        gtk_image_set_from_icon_name(bookmark_image, "sulfer_star_yes", 18);
+    else
+        gtk_image_set_from_icon_name(bookmark_image, "sulfer_star_no", 18);
+
     gtk_widget_grab_focus(v);
+}
+
+extern void bookmark_button_toggle_handle(GtkWidget *b)
+{
+    GtkImage *bookmark_image;
+    char *uri;
+
+    uri = uri_get(current_frame_get());
+    bookmark_image = GTK_IMAGE(gtk_builder_get_object(builder_get(), "bookmark_image"));
+
+    if (bookmark_exists(uri)) {
+        bookmark_remove(uri);
+        gtk_image_set_from_icon_name(bookmark_image, "sulfer_star_no", 18);
+    } else {
+        bookmark_add(uri);
+        gtk_image_set_from_icon_name(bookmark_image, "sulfer_star_yes", 18);
+    }
 }
 
 extern void uri_load_progress(WebKitWebView *v)
