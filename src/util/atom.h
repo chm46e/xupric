@@ -4,7 +4,7 @@
 #include "frame/frame.h"
 
 enum {
-	_sulfer_uri,
+	_xupric_uri,
 	_utf8str,
 	atom_len
 };

@@ -1,10 +1,10 @@
 <img src="res/logo/logo3.png" alt="Logo" height="100">
 
-## Sulfer __[alpha]__
+## Xupric __[alpha]__
 __[Project is under heavy development!]__
 
 A Modern Web Browser based on webkit2gtk.\
-Moderately inspired by surf, hence the name sulfur+surf.
+Moderately inspired by surf.
 
 ### Features
 * Functional web searching

@@ -1,5 +1,5 @@
 /*
- * sulfer.c:
+ * xupric.c:
  * The project's main file for
  * setup, running and cleanup
  */

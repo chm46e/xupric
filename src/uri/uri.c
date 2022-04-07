@@ -75,7 +75,7 @@ extern char *uri_get(struct frame *f)
 
 extern void uri_search_engine_load(struct frame *f)
 {
-    atom_set(f, _sulfer_uri, search_engine);
+    atom_set(f, _xupric_uri, search_engine);
 
     if (!(strcmp(search_engine, uri_get(f)))) {
         uri_reload(f, 0);
@@ -115,7 +115,7 @@ extern void uri_custom_load(struct frame *f, char *uri, int secondary)
             free(xpath);
     }
 
-    atom_set(f, _sulfer_uri, url);
+    atom_set(f, _xupric_uri, url);
 
     if (!(strcmp(url, uri_get(f)))) {
         uri_reload(f, 0);

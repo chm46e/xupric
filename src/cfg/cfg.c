@@ -1,7 +1,7 @@
 /*
  * cfg/cfg.c:
  * Intended for loading the configuration file via libconfuse
- * by default: ~/.config/sulfer/sulfer.conf
+ * by default: ~/.config/xupric/xupric.conf
 */
 
 #include <confuse.h>
@@ -26,7 +26,7 @@ extern conf_opt *cfg_load(char *name)
     config = ecalloc(conf_len, sizeof(conf_opt));
 
     cfg_opt_t opts[] = {
-        CFG_STR("cache_prefix", "~/.cache/sulfer", CFGF_NONE),
+        CFG_STR("cache_prefix", "~/.cache/xupric", CFGF_NONE),
         CFG_BOOL("ephemeral", cfg_false, CFGF_NONE),
         CFG_BOOL("java", cfg_true, CFGF_NONE),
         CFG_BOOL("javascript", cfg_true, CFGF_NONE),

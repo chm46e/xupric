@@ -8,7 +8,7 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixel_size">18</property>
-    <property name="icon_name">sulfer_star_no</property>
+    <property name="icon_name">xupric_star_no</property>
   </object>
   <object class="GtkPopover" id="cookies_popover">
     <property name="name">cookies_popover</property>
@@ -586,130 +586,6 @@
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkTextBuffer" id="textbuffer1">
-    <property name="text" translatable="yes">hjdkl;fhjadsklfh jsdkahlfl 
-
-asd
-fsa
-'fsd
-affsdaf
-sd
-f
-sda
-f
-sad
-fsda
-f
-sda
-f
-dsa
-fsda
-f
-ds
-f
-ds
-f
-sd
-f
-sd
-f
-sda
-f
-asd
-f
-asd
-f
-sda
-fsd
-f
-d
-a
-fasd
-f
-sd
-af
-sda
-f
-sda
-f
-sad
-f
-asd
-fs
-ghdf
-h
-dsaf
-gfdhsasd
-h
-n
-
-ghgf
-f
-sgd
-hs
-fg
-d
-a
-f
-das
-f
-dsaf
-sd
-fdax
-f
-asd
-f
-sdaf
-sdaf
-sd
-f
-sd
-f
-sd
-f
-sda
-f
-drhj
-etjkdsl;g ujdfs
-gh
-gh
-j
-gh
-k 
-hutg
-au
-
-
-tgf'dj
-'hvdfujt
-dfsh
-dfg
-h
-dfg
-h
-sgh
-ety
-krts
-gu
-fg
-j
-fgd
-jg
-fj
-gdf
-j
-gfdl
-sr
-
-uj
-sfg
-hjf
-dh
-gf
-h
-
-</property>
   </object>
   <object class="GtkEntryBuffer" id="uri_buffer"/>
   <object class="GtkEntryBuffer" id="uri_buffer_secondary"/>
@@ -1601,7 +1477,7 @@ h
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="pixel_size">18</property>
-                        <property name="icon_name">sulfer_main_menu</property>
+                        <property name="icon_name">xupric_main_menu</property>
                       </object>
                     </child>
                   </object>

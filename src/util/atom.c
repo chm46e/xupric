@@ -32,7 +32,7 @@ extern void xdisplay_close(void)
 
 extern void atoms_init(void)
 {
-    atoms[_sulfer_uri] = XInternAtom(dpy, "_SULFER_URI", False);
+    atoms[_xupric_uri] = XInternAtom(dpy, "_XUPRIC_URI", False);
     atoms[_utf8str] = XInternAtom(dpy, "UTF8_STRING", False);
 }
 

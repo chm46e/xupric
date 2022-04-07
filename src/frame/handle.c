@@ -111,9 +111,9 @@ extern void uri_changed(WebKitWebView *v)
 
     bookmark_image = GTK_IMAGE(gtk_builder_get_object(builder, "bookmark_image"));
     if (bookmark_exists(uri))
-        gtk_image_set_from_icon_name(bookmark_image, "sulfer_star_yes", 18);
+        gtk_image_set_from_icon_name(bookmark_image, "xupric_star_yes", 18);
     else
-        gtk_image_set_from_icon_name(bookmark_image, "sulfer_star_no", 18);
+        gtk_image_set_from_icon_name(bookmark_image, "xupric_star_no", 18);
 
     if (strcmp(uri, uri_last))
         history_add(uri);
@@ -130,10 +130,10 @@ extern void bookmark_button_toggle_handle(GtkWidget *b)
 
     if (bookmark_exists(uri)) {
         bookmark_remove(uri);
-        gtk_image_set_from_icon_name(bookmark_image, "sulfer_star_no", 18);
+        gtk_image_set_from_icon_name(bookmark_image, "xupric_star_no", 18);
     } else {
         bookmark_add(uri);
-        gtk_image_set_from_icon_name(bookmark_image, "sulfer_star_yes", 18);
+        gtk_image_set_from_icon_name(bookmark_image, "xupric_star_yes", 18);
     }
 }
 

@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Sulfer
-Exec=sulfer %u
-Icon=sulfer
+Name=Xupric
+Exec=xupric %u
+Icon=xupric
 GenericName=Web Browser
 Comment=Surf the web
 Type=Application

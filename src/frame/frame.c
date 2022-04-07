@@ -53,7 +53,7 @@ extern void frame_list_create(void)
     g_signal_connect(gtk_builder_get_object(builder, "menu_quit_button"), "clicked",
         G_CALLBACK(window_close), NULL);
     g_signal_connect(gtk_builder_get_object(builder, "help_about_button"), "clicked",
-        G_CALLBACK(uri_custom_load_gwrap), "https://github.com/chm46e/sulfer");
+        G_CALLBACK(uri_custom_load_gwrap), "https://github.com/chm46e/xupric");
     g_signal_connect(gtk_builder_get_object(builder, "help_debug_button"), "clicked",
         G_CALLBACK(debug_toggle), NULL);
     g_signal_connect(gtk_builder_get_object(builder, "menu_zoom_dec_button"), "clicked",

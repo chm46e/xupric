@@ -9,9 +9,9 @@ if [ "$test" = "" ]; then
 	exit 1
 fi
 
-cp -f ~/.config/sulfer/sulfer.conf ../../
-cp -f ~/.config/sulfer/styles/main.css ../css/
-cp -f ~/.config/sulfer/styles/dark_mode.css ../css/
-cp -f ~/.config/sulfer/styles/scrollbar.css ../css/
+cp -f ~/.config/xupric/xupric.conf ../../
+cp -f ~/.config/xupric/styles/main.css ../css/
+cp -f ~/.config/xupric/styles/dark_mode.css ../css/
+cp -f ~/.config/xupric/styles/scrollbar.css ../css/
 
 printf "Update completed"

@@ -14,9 +14,9 @@
 #include "cfg.h"
 
 static conf_opt *config;
-static char *config_path = "~/.config/sulfer";
+static char *config_path = "~/.config/xupric";
 char *config_names[] = {
-    "sulfer.conf",
+    "xupric.conf",
     "scripts/",
     "scripts/script.js",
     "styles/",
@@ -36,7 +36,7 @@ char *cache_names[] = {
     "history.db"
 };
 
-static void sulfer_conf_build(void);
+static void xupric_conf_build(void);
 static void dark_mode_css_build(void);
 static void scrollbar_css_build(void);
 static void main_css_build(void);
