@@ -17,8 +17,10 @@
 
 #include "frame.h"
 #include "handle.h"
+#include "download.h"
 
 #include "main_ui.h"
+#include "gtk_wrap.h"
 
 static conf_opt *config;
 static GtkBuilder *builder;
@@ -48,6 +50,40 @@ extern void frame_list_create(void)
         G_CALLBACK(bar_uri_enter_handle), gtk_builder_get_object(builder, "uri_buffer_secondary"));
     g_signal_connect(gtk_builder_get_object(builder, "bar_bookmark_button"), "clicked",
         G_CALLBACK(bookmark_button_toggle_handle), NULL);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_quit_button"), "clicked",
+        G_CALLBACK(window_close), NULL);
+    g_signal_connect(gtk_builder_get_object(builder, "help_about_button"), "clicked",
+        G_CALLBACK(uri_custom_load_gwrap), "https://github.com/chm46e/sulfer");
+    g_signal_connect(gtk_builder_get_object(builder, "help_debug_button"), "clicked",
+        G_CALLBACK(debug_toggle), NULL);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_zoom_dec_button"), "clicked",
+        G_CALLBACK(zoom_action_gwrap), 0);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_zoom_inc_button"), "clicked",
+        G_CALLBACK(zoom_action_gwrap), 1);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_zoom_reset_button"), "clicked",
+        G_CALLBACK(zoom_action_gwrap), 2);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_tab_1_button"), "clicked",
+        G_CALLBACK(view_show_gwrap), 0);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_tab_2_button"), "clicked",
+        G_CALLBACK(view_show_gwrap), 1);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_tab_3_button"), "clicked",
+        G_CALLBACK(view_show_gwrap), 2);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_tab_4_button"), "clicked",
+        G_CALLBACK(view_show_gwrap), 3);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_tab_5_button"), "clicked",
+        G_CALLBACK(view_show_gwrap), 4);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_download_quit_button"), "clicked",
+        G_CALLBACK(download_quit), NULL);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_bookmarks_button"), "clicked",
+        G_CALLBACK(win_bookmark_build), NULL);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_history_button"), "clicked",
+        G_CALLBACK(win_history_build), NULL);
+    g_signal_connect(gtk_builder_get_object(builder, "history_all_button"), "clicked",
+        G_CALLBACK(history_remove_all_gwrap), NULL);
+    g_signal_connect(gtk_builder_get_object(builder, "menu_cookies_button"), "clicked",
+        G_CALLBACK(win_cookie_build), NULL);
+    g_signal_connect(gtk_builder_get_object(builder, "cookies_all_button"), "clicked",
+        G_CALLBACK(cookie_remove_all_gwrap), NULL);
 
     win = GTK_WIDGET(gtk_builder_get_object(builder, "main_window"));
     g_signal_connect(win, "destroy", G_CALLBACK(window_close), NULL);
@@ -94,6 +130,7 @@ extern void view_show(int id)
     gtk_box_pack_end(GTK_BOX(box), GTK_WIDGET(frames[id].view), TRUE, TRUE, 0);
 
     gtk_widget_show_all(frames[id].win);
+
     gtk_widget_grab_focus(GTK_WIDGET(frames[id].view));
     frames[last].view = dview;
     last = id;
@@ -234,6 +271,8 @@ static void view_list_create(void)
         g_signal_connect(G_OBJECT(views[i]), "notify::estimated-load-progress",
             G_CALLBACK(uri_load_progress), NULL);
     }
+    g_signal_connect(G_OBJECT(context), "download-started",
+        G_CALLBACK(download_started), NULL);
 }
 
 extern void frame_cleanup(void)

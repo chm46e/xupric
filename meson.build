@@ -11,7 +11,7 @@ gtk_dep = dependency('gtk+-3.0')
 x11_dep = dependency('x11', method: 'pkg-config')
 webkit_dep = dependency('webkit2gtk-4.0', method: 'pkg-config')
 
-src = ['src/sulfer.c', 'src/cfg/cfg.c', 'src/cfg/config.c', 'src/frame/frame.c', 'src/frame/handle.c', 'src/uri/uri.c', 'src/util/util.c', 'src/util/atom.c', 'src/util/path.c', 'src/extras/bookmark.c']
+src = ['src/sulfer.c', 'src/cfg/cfg.c', 'src/cfg/config.c', 'src/frame/frame.c', 'src/frame/handle.c', 'src/uri/uri.c', 'src/util/util.c', 'src/util/atom.c', 'src/util/path.c', 'src/extras/bookmark.c', 'src/extras/history.c', 'src/frame/download.c', 'src/extras/cookie.c']
 
 incs = include_directories('src/')
 ldflags = ['-l:libconfuse.a', '-lgthread-2.0']

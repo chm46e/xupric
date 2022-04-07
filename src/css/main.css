@@ -5,12 +5,18 @@
 @define-color uri_hover rgba(53, 55, 61, 1); /* #35373d */
 @define-color text rgba(171, 173, 172, 1); /* #abadac */
 @define-color text_hl rgba(70, 71, 70, 1); /* #464746 */
+@define-color red rgba(204, 102, 102, 1); /* cc6666 */
+@define-color green rgba(181, 189, 104, 1); /* b5bd68 */
 
 * {
 	color: @text;
 	background-color: @main;
 	min-width: 0px;
 	min-height: 0px;
+}
+
+label {
+	font-family: "JetBrainsMono Nerd Font", sans-serif;
 }
 
 #bar_uri_entry, #bar_uri_entry_secondary {
@@ -25,29 +31,73 @@
 	caret-color: @text;
 }
 
+#menu_download_label {
+	font-family: "JetBrainsMono Nerd Font", sans-serif;
+	caret-color: @text;
+}
+
+selection {
+	background-color: @text_hl;
+}
+
 *:disabled {
-	background-color: #cc6666;
+	background-color: @main_active;
+}
+
+popover {
+	border: none;
+	background-color: @uri;
+	border-radius: 7px;
+}
+
+popover * {
+	background-color: @uri;
 }
 
 button {
 	-gtk-icon-shadow: none;
 	background-image: none;
 	border: none;
+	border-radius: 7px;
 }
 
 button:hover {
-	box-shadow: 0 0 3px @main_active;
+	box-shadow: 0 0 5px @main_active;
+	text-shadow: none;
 }
 
 button:active {
-	box-shadow: 0 0 10px @main_active;
+	box-shadow: 0 0 8px @uri_hover;
+	text-shadow: none;
 }
 
 menu, menu * {
 	background-color: @uri;
-	border: 0px;
+	border: none;
 }
 
-selection {
-	background-color: @text_hl;
+#menu_tab_box * {
+	background-color: @uri_hover;
+	font-size: 14px;
+}
+
+/* item separators */
+#menu_privacy_box, #menu_history_box, #menu_bookmarks_box,
+#menu_cookies_box, #menu_download_box, #menu_web_box,
+#menu_zoom_box, #menu_help_box, #menu_quit_box,
+#help_shortcuts_box, #help_about_box,
+#cookies_all_box,
+#history_10_box, #history_all_box {
+	border-top: 1px @uri_hover solid;
+}
+
+#history_popover, #rus_popover {
+	border: 2px @uri_hover solid;
+}
+
+#rus_no_button label {
+	color: @red;
+}
+#rus_yes_button label {
+	color: @green;
 }

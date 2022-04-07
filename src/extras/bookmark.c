@@ -87,6 +87,11 @@ extern char **books_get(void)
     return books;
 }
 
+extern int books_len_get(void)
+{
+    return books_len;
+}
+
 extern int bookmark_exists(char *book)
 {
     char *sql;

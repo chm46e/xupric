@@ -17,6 +17,8 @@
 #include "uri/uri.h"
 #include "cfg/config.h"
 #include "extras/bookmark.h"
+#include "extras/history.h"
+#include "extras/cookie.h"
 
 static void sigchld();
 static void sighup();
@@ -60,11 +62,15 @@ static void setup(void)
     config_cache_create();
     atoms_init();
     bookmark_init(config_names[8]);
+    history_init(cache_names[5]);
+    cookie_init(cache_names[0]);
 }
 
 static void cleanup(void)
 {
     bookmark_cleanup();
+    history_cleanup();
+    cookie_cleanup();
     frame_cleanup();
     uri_cleanup();
     config_cache_cleanup();

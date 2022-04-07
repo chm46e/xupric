@@ -32,7 +32,8 @@ char *cache_names[] = {
     "data/",
     "itp/",
     "offline/",
-    "hsts/"
+    "hsts/",
+    "history.db"
 };
 
 static void sulfer_conf_build(void);

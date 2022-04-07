@@ -52,6 +52,7 @@ extern conf_opt *cfg_load(char *name)
         CFG_STR("secondary_search_engine", "searx", CFGF_NONE),
         CFG_BOOL("dark_mode", cfg_true, CFGF_NONE),
         CFG_BOOL("scrollbar", cfg_true, CFGF_NONE),
+        CFG_BOOL("debug", cfg_false, CFGF_NONE),
         CFG_END()
     };
 
@@ -85,6 +86,7 @@ extern conf_opt *cfg_load(char *name)
     config[conf_secondary_search_engine].s = strdup(cfg_getstr(cfg, "secondary_search_engine"));
     config[conf_dark_mode].i = cfg_getbool(cfg, "dark_mode");
     config[conf_scrollbar].i = cfg_getbool(cfg, "scrollbar");
+    config[conf_debug].i = cfg_getbool(cfg, "debug");
 
     cfg_free(cfg);
 

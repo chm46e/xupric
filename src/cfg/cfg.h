@@ -15,6 +15,7 @@ typedef enum {
     conf_itp, conf_tls_error_policy,
     conf_search_engine, conf_secondary_search_engine,
     conf_dark_mode, conf_scrollbar,
+    conf_debug,
     conf_len
 } conf_opt_name;
 
