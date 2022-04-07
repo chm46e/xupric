@@ -1,7 +1,6 @@
-<img src="res/logo/logo3.png" alt="Logo" height="100">
-
+\<logo maybe here?\>
 ## Xupric __[alpha]__
-__[Project is under heavy development!]__
+__[Project is in its early stages!]__
 
 A Modern Web Browser based on webkit2gtk.\
 Moderately inspired by surf.
@@ -9,8 +8,8 @@ Moderately inspired by surf.
 ### Features
 * Functional web searching
 * Tabs support (10 static tabs)
-* Configuration through ~/.config/sulfer/sulfer.conf
-* Additional (styling, certs) configuration in ~/.config/sulfer/
+* Configuration through ~/.config/xupric/xupric.conf
+* Additional (styling, certs) configuration in ~/.config/xupric/
 * Shortcut keys
 * Custom Navigation Bar made with gtkbuilder and css
 * & much more
@@ -32,8 +31,9 @@ Moderately inspired by surf.
 NB! For a way better look, change duckduckgo's theme to __dark__.
 
 ### Showcase
-<img src="res/previews/start_sulfer.png">
-<img src="res/previews/wiki_sulfer.png">
+<img src="res/previews/xupric_start.png">
+<img src="res/previews/xupric_menu.png">
+<img src="res/previews/xupric_wiki.png">
 
 ### Keyboard Shortcuts
 | KEY            | Action           |
@@ -57,11 +57,15 @@ NB! For a way better look, change duckduckgo's theme to __dark__.
 Tab (10 max) switching is done with alt+(tab_number from 1->0)
 
 ### Configuration
-Most of the configuration is done through ~/.config/sulfer/sulfer.conf.\
-And the styles are in ~/.config/sulfer/styles/
+Most of the configuration is done through ~/.config/xupric/xupric.conf.\
+And the styles are in ~/.config/xupric/styles/
+
+### Credits
+Thank you, <a href="https://github.com/Tux-Code">Tux-Code</a> - OvercoME for creating the logos.
 
 ### Notes
-The default sulfer is styled using the <a href="https://github.com/ChrisKempson/Tomorrow-Theme">Tomorrow Night</a> color theme.\
-The cache is stored in ~/.cache/sulfer/\
+The default xupric is styled using the <a href="https://github.com/ChrisKempson/Tomorrow-Theme">Tomorrow Night</a> color theme.\
+The cache is stored in ~/.cache/xupric/\
 Almost all the files/dirs get generated during run-time.\
+The coding style is somewhat a lazy Linux kernel like.\
 There are a ton of bugs, so hold your teddy bear.
