@@ -1,5 +1,4 @@
-\<logo maybe here?\>
-## Xupric __[alpha]__
+## <img src="res/xupric.png" width=20> Xupric __[alpha]__
 __[Project is in its early stages!]__
 
 A Modern Web Browser based on webkit2gtk.\
