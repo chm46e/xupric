@@ -123,6 +123,7 @@ extern void view_show(int id)
     GtkBuilder *builder;
     WebKitWebView *dview;
     GtkWidget *box;
+    char zoom[5];
 
     builder = builder_get();
     box = GTK_WIDGET(gtk_builder_get_object(builder, "main_box"));
@@ -147,6 +148,10 @@ extern void view_show(int id)
                        frames[id].uri);
     gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(builder, "bar_uri_entry_secondary")),
                        "");
+
+    sprintf(zoom, "%i%%", (int)(frames[id].zoom*100));
+    gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder,"menu_zoom_reset_label")),
+                       zoom);
 }
 
 extern struct frame **frames_get(void)
