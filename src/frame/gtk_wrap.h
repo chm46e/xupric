@@ -9,6 +9,8 @@
 #include <frame/handle.h>
 #include <uri/uri.h>
 #include <extras/bookmark.h>
+#include <extras/history.h>
+#include <extras/cookie.h>
 #include <unistd.h>
 
 static inline void view_show_gwrap(GtkWidget *, int id)
@@ -36,23 +38,21 @@ static void zoom_action_gwrap(GtkWidget *, int action)
 
 static void bookmark_remove_gwrap(GtkWidget *w, char *uri)
 {
-    GtkWidget *box, *mbox;
+    GtkWidget *box;
 
     bookmark_remove(uri);
 
     box = gtk_widget_get_parent(w);
-    mbox = gtk_widget_get_parent(box);
     gtk_widget_destroy(box);
 }
 
 static void history_remove_gwrap(GtkWidget *w, char *uri)
 {
-    GtkWidget *box, *mbox;
+    GtkWidget *box;
 
     history_remove(uri);
 
     box = gtk_widget_get_parent(w);
-    mbox = gtk_widget_get_parent(box);
     gtk_widget_destroy(box);
 }
 
@@ -63,7 +63,7 @@ static inline void history_remove_all_gwrap(GtkWidget *)
 
 static void cookie_remove_gwrap(GtkWidget *w, char *text)
 {
-    GtkWidget *box, *mbox;
+    GtkWidget *box;
     char *delim = ": ";
     char *token;
 
@@ -73,7 +73,6 @@ static void cookie_remove_gwrap(GtkWidget *w, char *text)
     cookie_remove(token);
 
     box = gtk_widget_get_parent(w);
-    mbox = gtk_widget_get_parent(box);
     gtk_widget_destroy(box);
 }
 

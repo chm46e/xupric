@@ -1,5 +1,7 @@
 project('xupric', 'c', version: '0.1.0', 
-  default_options: ['warning_level=3', 'c_std=gnu18'])
+  default_options: ['warning_level=3'])
+
+add_global_arguments('-Wno-pedantic', language : 'c')
 
 cc = meson.get_compiler('c')
 cfg_lib_dirs = ['/usr/local/lib/', '/usr/lib', '/usr/share/lib']

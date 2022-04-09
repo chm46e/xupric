@@ -57,21 +57,21 @@ extern void frame_list_create(void)
     g_signal_connect(gtk_builder_get_object(builder, "help_debug_button"), "clicked",
         G_CALLBACK(debug_toggle), NULL);
     g_signal_connect(gtk_builder_get_object(builder, "menu_zoom_dec_button"), "clicked",
-        G_CALLBACK(zoom_action_gwrap), 0);
+        G_CALLBACK(zoom_action_gwrap), (int *)0);
     g_signal_connect(gtk_builder_get_object(builder, "menu_zoom_inc_button"), "clicked",
-        G_CALLBACK(zoom_action_gwrap), 1);
+        G_CALLBACK(zoom_action_gwrap), (int *)1);
     g_signal_connect(gtk_builder_get_object(builder, "menu_zoom_reset_button"), "clicked",
-        G_CALLBACK(zoom_action_gwrap), 2);
+        G_CALLBACK(zoom_action_gwrap), (int *)2);
     g_signal_connect(gtk_builder_get_object(builder, "menu_tab_1_button"), "clicked",
-        G_CALLBACK(view_show_gwrap), 0);
+        G_CALLBACK(view_show_gwrap), (int *)0);
     g_signal_connect(gtk_builder_get_object(builder, "menu_tab_2_button"), "clicked",
-        G_CALLBACK(view_show_gwrap), 1);
+        G_CALLBACK(view_show_gwrap), (int *)1);
     g_signal_connect(gtk_builder_get_object(builder, "menu_tab_3_button"), "clicked",
-        G_CALLBACK(view_show_gwrap), 2);
+        G_CALLBACK(view_show_gwrap), (int *)2);
     g_signal_connect(gtk_builder_get_object(builder, "menu_tab_4_button"), "clicked",
-        G_CALLBACK(view_show_gwrap), 3);
+        G_CALLBACK(view_show_gwrap), (int *)3);
     g_signal_connect(gtk_builder_get_object(builder, "menu_tab_5_button"), "clicked",
-        G_CALLBACK(view_show_gwrap), 4);
+        G_CALLBACK(view_show_gwrap), (int *)4);
     g_signal_connect(gtk_builder_get_object(builder, "menu_download_quit_button"), "clicked",
         G_CALLBACK(download_quit), NULL);
     g_signal_connect(gtk_builder_get_object(builder, "menu_bookmarks_button"), "clicked",

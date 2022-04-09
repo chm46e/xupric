@@ -36,16 +36,8 @@ char *cache_names[] = {
     "history.db"
 };
 
-static void xupric_conf_build(void);
-static void dark_mode_css_build(void);
-static void scrollbar_css_build(void);
-static void main_css_build(void);
-
 extern void config_cache_create(void)
 {
-    struct stat st;
-    int missing = 0;
-
     config_path = home_path_expand(config_path);
 
     for (int i = 0; i < (int)LENGTH(config_names); i++) {
@@ -66,30 +58,6 @@ extern void config_cache_create(void)
             path_create(cache_names[i]);
         else
             file_create(cache_names[i]);
-    }
-
-    stat(config_names[0], &st);
-    if (st.st_size == 0) {
-        printf("[WARNING] %s is missing.\n", config_names[0]);
-        missing = 1;
-    }
-
-    stat(config_names[5], &st);
-    if (st.st_size == 0) {
-        printf("[WARNING] %s is missing.\n", config_names[5]);
-        missing = 1;
-    }
-
-    stat(config_names[6], &st);
-    if (st.st_size == 0) {
-        printf("[WARNING] %s is missing.\n", config_names[6]);
-        missing = 1;
-    }
-
-    stat(config_names[7], &st);
-    if (st.st_size == 0) {
-        printf("[WARNING] %s is missing.\n", config_names[7]);
-        missing = 1;
     }
 }
 

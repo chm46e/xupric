@@ -7,11 +7,11 @@
 static GtkBuilder *builder;
 static WebKitDownload *download_last = 0;
 
-static void download_destination_created(WebKitDownload *d, char *dest);
+static void download_destination_created(WebKitDownload *, char *dest);
 static void download_progress_changed(WebKitDownload *d);
 static void download_finished(WebKitDownload *);
 
-extern void download_started(WebKitWebContext *wc, WebKitDownload *d)
+extern void download_started(WebKitWebContext *, WebKitDownload *d)
 {
     builder = builder_get();
 
@@ -25,7 +25,7 @@ extern void download_started(WebKitWebContext *wc, WebKitDownload *d)
     download_last = d;
 }
 
-static void download_destination_created(WebKitDownload *d, char *dest)
+static void download_destination_created(WebKitDownload *, char *dest)
 {
     char *name;
 

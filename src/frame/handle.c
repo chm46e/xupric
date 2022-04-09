@@ -84,7 +84,7 @@ extern void bar_uri_enter_handle(GtkWidget *b)
     char *text;
 
     f = current_frame_get();
-    text = gtk_entry_get_text(GTK_ENTRY(b));
+    text = (char *)gtk_entry_get_text(GTK_ENTRY(b));
 
     if (!(strcmp(gtk_widget_get_name(b), "bar_uri_entry"))) {
         uri_custom_load(f, text, 0);
@@ -94,7 +94,7 @@ extern void bar_uri_enter_handle(GtkWidget *b)
     }
 }
 
-extern void uri_changed(WebKitWebView *v)
+extern void uri_changed(WebKitWebView *)
 {
     GtkBuilder *builder;
     GtkImage *bookmark_image;
@@ -120,7 +120,7 @@ extern void uri_changed(WebKitWebView *v)
     uri_last = uri;
 }
 
-extern void bookmark_button_toggle_handle(GtkWidget *b)
+extern void bookmark_button_toggle_handle(GtkWidget *)
 {
     GtkImage *bookmark_image;
     char *uri;
@@ -210,7 +210,7 @@ extern void win_bookmark_build(GtkWidget *)
     gtk_container_add(GTK_CONTAINER(scroll), viewport);
     gtk_container_add(GTK_CONTAINER(win), scroll);
 
-    gtk_widget_show_all(GTK_WINDOW(win));
+    gtk_widget_show_all(win);
 }
 
 extern void win_history_build(GtkWidget *)
@@ -266,7 +266,7 @@ extern void win_history_build(GtkWidget *)
     gtk_container_add(GTK_CONTAINER(scroll), viewport);
     gtk_container_add(GTK_CONTAINER(win), scroll);
 
-    gtk_widget_show_all(GTK_WINDOW(win));
+    gtk_widget_show_all(win);
 }
 
 extern void win_cookie_build(GtkWidget *)
@@ -321,7 +321,7 @@ extern void win_cookie_build(GtkWidget *)
     gtk_container_add(GTK_CONTAINER(scroll), viewport);
     gtk_container_add(GTK_CONTAINER(win), scroll);
 
-    gtk_widget_show_all(GTK_WINDOW(win));
+    gtk_widget_show_all(win);
 }
 
 extern void win_bookmark_empty(GtkWidget *mbox)
