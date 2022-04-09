@@ -120,9 +120,11 @@ extern void view_order_show(int increment)
 
 extern void view_show(int id)
 {
+    GtkBuilder *builder;
     WebKitWebView *dview;
     GtkWidget *box;
 
+    builder = builder_get();
     box = GTK_WIDGET(gtk_builder_get_object(builder, "main_box"));
     dview = g_object_ref(frames[last].view);
 
@@ -140,6 +142,11 @@ extern void view_show(int id)
         frames[id].uri = uri_get(&(frames[id]));
         frames[id].empty = 0;
     }
+
+    gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(builder, "bar_uri_entry")),
+                       frames[id].uri);
+    gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(builder, "bar_uri_entry_secondary")),
+                       "");
 }
 
 extern struct frame **frames_get(void)
