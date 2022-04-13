@@ -6,6 +6,7 @@
 
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
+#include <stdio.h>
 
 #include "cfg/cfg.h"
 #include "frame.h"
@@ -152,6 +153,8 @@ extern void debug_toggle(GtkWidget *)
 {
     conf_opt *config = cfg_get();
     config[conf_debug].i = !(config[conf_debug].i);
+
+	printf("This button is very useful:D\n");
 }
 
 extern void win_bookmark_build(GtkWidget *)
