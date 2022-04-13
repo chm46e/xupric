@@ -250,8 +250,6 @@ static void view_list_create(void)
         config[conf_ephemeral].i ? WEBKIT_CACHE_MODEL_WEB_BROWSER :
         WEBKIT_CACHE_MODEL_DOCUMENT_VIEWER);
 
-    webkit_web_context_set_use_system_appearance_for_scrollbars(context, 1);
-
     if (!config[conf_ephemeral].i) {
         if (config[conf_cookie_policy].i == 0)
             webkit_cookie_manager_set_accept_policy(cookiemanager, WEBKIT_COOKIE_POLICY_ACCEPT_NEVER);
