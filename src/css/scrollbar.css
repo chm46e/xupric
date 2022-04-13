@@ -1,3 +1,7 @@
+body {
+	background-color: #1d1f21;
+}
+
 ::-webkit-scrollbar {
 	width: 7px;
 	height: 7px;
@@ -13,7 +17,7 @@
 	width: 7px;
 	background-color: #4b5159;
 	border-radius: 7px;
-	box-shadow: 0 0 2px #41454c; 
+	box-shadow: 0 0 2px #41454c;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -22,7 +26,7 @@
 
 ::-webkit-scrollbar-thumb:active {
 	background-color: #373b41;
-} 
+}
 
 ::-webkit-scrollbar-corner {
 	background-color: #1d1f21;
