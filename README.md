@@ -15,17 +15,18 @@ Moderately inspired by surf.
 
 ### Dependencies
 * <a href="https://github.com/libconfuse/libconfuse">libconfuse</a> \<required\>
-* webkit2gtk \<required\>
+* webkit2gtk-4.0 \<required\>
 * meson \<required\>
 * x11 \<required\>
 * gtk3 \<required\>
 
+NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
+
 ### Install
 ```sh
-> mkdir build && cd build
-> meson ..
-> ninja
-> sudo ninja install 
+> meson build
+> ninja -C build
+> sudo ninja -C build install 
 ```
 NB! For a way better look, change duckduckgo's theme to __dark__.
 
@@ -60,7 +61,7 @@ Most of the configuration is done through ~/.config/xupric/xupric.conf.\
 And the styles are in ~/.config/xupric/styles/
 
 ### Credits
-Thank you, <a href="https://github.com/Tux-Code">Tux-Code</a> - OvercoME for creating the logos.
+Thank you, <a href="https://github.com/Tux-Code">Tux-Code</a> for creating the logos.
 
 ### Notes
 The default xupric is styled using the <a href="https://github.com/ChrisKempson/Tomorrow-Theme">Tomorrow Night</a> color theme.\
