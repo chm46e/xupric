@@ -1,5 +1,6 @@
-## <img src="res/xupric.png" width=20> Xupric __[alpha]__
-__[Project is in its early stages!]__
+## <img src="res/xupric.png" width=20> Xupric __[break]__
+__Stopped development as I want to work on other stuff.\
+Feel free to fork and improve it.__
 
 A Modern Web Browser based on webkit2gtk.\
 Moderately inspired by surf.
@@ -8,9 +9,11 @@ Moderately inspired by surf.
 * Functional web searching
 * Tabs support (10 static tabs)
 * Configuration through ~/.config/xupric/xupric.conf
-* Additional (styling, certs) configuration in ~/.config/xupric/
+* CSS styling in ~/.config/xupric/styles/
+* Dark mode (disabled by default)
 * Shortcut keys
-* Custom Navigation Bar made with gtkbuilder and css
+* Custom Menu & Navigation Bar
+* Bookmarks, history, cookies
 * & much more
 
 ### Dependencies
@@ -42,7 +45,10 @@ NB! For a way better look, change duckduckgo's theme to __dark__.
 | ctrl+r         | reload           |
 | ctrl+shift+r   | reload -cache    |
 | F5             | reload           |
-| Esc            | stop loading     |
+| ctrl+f         | start find       |
+| ctrl+n         | find next        |
+| ctrl+shift+n   | find previous    |
+| Esc            | stop loading & finish find|
 | F11            | fullscreen toggle|
 | alt+h          | goto home/start  |
 | alt+Left       | go backwards     |
@@ -68,4 +74,6 @@ The default xupric is styled using the <a href="https://github.com/ChrisKempson/
 The cache is stored in ~/.cache/xupric/\
 Almost all the files/dirs get generated during run-time.\
 The coding style is somewhat a lazy Linux kernel like.\
+The frame/ dir needs a refactor as it is pretty bad right now.\
+My intention was to make it not look like a gtk application.\
 There are a ton of bugs, so hold your teddy bear.
