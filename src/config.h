@@ -24,6 +24,9 @@ static struct key keys[] = {
 	{0, GDK_KEY_Escape, wrap_uri_stop, {0}},
 	{0, GDK_KEY_F11, wrap_fullscreen_toggle, {0}},
 	{AKEY, GDK_KEY_h, wrap_uri_search_engine_load, {0}},
+	{CKEY, GDK_KEY_f, wrap_find_start, {0}},
+	{CKEY, GDK_KEY_n, wrap_find_next, {0}},
+	{CKEY|SKEY, GDK_KEY_n, wrap_find_previous, {0}},
 
 	{AKEY, GDK_KEY_Left, wrap_navigate, {1}},
 	{AKEY, GDK_KEY_Right, wrap_navigate, {0}},
