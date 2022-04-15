@@ -202,7 +202,7 @@ static void view_list_create(void)
         "javascript-can-open-windows-automatically", config[conf_js_auto_popups].i,
         "default-font-family", config[conf_font_family].s,
         "default-font-size", config[conf_font_size].i,
-        "default-charset", config[conf_charset].i,
+        "default-charset", config[conf_charset].s,
         "enable-developer-extras", config[conf_developer_extras].i,
         "enable-dns-prefetching", config[conf_dns_prefetching].i,
         "enable-caret-browsing", config[conf_caret_browsing].i,
