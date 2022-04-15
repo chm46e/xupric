@@ -17,19 +17,23 @@ Moderately inspired by surf.
 * & much more
 
 ### Dependencies
-* <a href="https://github.com/libconfuse/libconfuse">libconfuse</a> \<required\>
+* <a href="https://github.com/libconfuse/libconfuse">confuse</a> \<required\>
 * webkit2gtk-4.0 \<required\>
+* xxd \<required\>
 * meson \<required\>
 * x11 \<required\>
 * gtk3 \<required\>
+* JetBrainsMono Nerd Font \<recommended\>
+* appmenu-gtk-module \<optional\>
 
 NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 
 ### Install
 ```sh
-> meson build
-> ninja -C build
-> sudo ninja -C build install 
+> mkdir build && cd build
+> meson ..
+> ninja
+> sudo ninja install
 ```
 NB! For a way better look, change duckduckgo's theme to __dark__.
 
