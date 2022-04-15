@@ -172,6 +172,8 @@ extern void win_bookmark_build(GtkWidget *)
     gtk_css_provider_load_from_data(css, "box { border-top: 1px #35373d solid; }", -1, NULL);
 
     win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(win), 800, 800);
+    gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_CENTER);
     scroll = gtk_scrolled_window_new(NULL, NULL);
     viewport = gtk_viewport_new(NULL, NULL);
     mbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -231,6 +233,8 @@ extern void win_history_build(GtkWidget *)
     gtk_css_provider_load_from_data(css, "box { border-top: 1px #35373d solid; }", -1, NULL);
 
     win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(win), 800, 800);
+    gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_CENTER);
     scroll = gtk_scrolled_window_new(NULL, NULL);
     viewport = gtk_viewport_new(NULL, NULL);
     mbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -287,6 +291,8 @@ extern void win_cookie_build(GtkWidget *)
     gtk_css_provider_load_from_data(css, "box { border-top: 1px #35373d solid; }", -1, NULL);
 
     win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(win), 800, 800);
+    gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_CENTER);
     scroll = gtk_scrolled_window_new(NULL, NULL);
     viewport = gtk_viewport_new(NULL, NULL);
     mbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);

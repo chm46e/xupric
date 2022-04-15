@@ -90,6 +90,8 @@ extern void frame_list_create(void)
     g_signal_connect(win, "key-press-event", G_CALLBACK(window_event_handle), NULL);
     g_signal_connect(win, "window-state-event", G_CALLBACK(window_event_handle), NULL);
 
+    gtk_window_maximize(GTK_WINDOW(win));
+
     view_list_create();
 
     for (int i = 0; i < 10; i++) {
