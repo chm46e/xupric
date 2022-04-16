@@ -1,6 +1,6 @@
-## <img src="res/xupric.png" width=20> Xupric __[break]__
-__Stopped development as I want to work on other stuff.\
-Feel free to fork and improve it.__
+## <img src="res/xupric.png" width=20> Xupric
+__Screw it, imma work a bit more aka it's horrible:D\
+Couldn't even last 3 days.__
 
 A Modern Web Browser based on webkit2gtk.\
 Moderately inspired by surf.
@@ -78,6 +78,5 @@ The default xupric is styled using the <a href="https://github.com/ChrisKempson/
 The cache is stored in ~/.cache/xupric/\
 Almost all the files/dirs get generated during run-time.\
 The coding style is somewhat a lazy Linux kernel like.\
-The frame/ dir needs a refactor as it is pretty bad right now.\
 My intention was to make it not look like a gtk application.\
 There are a ton of bugs, so hold your teddy bear.
