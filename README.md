@@ -35,7 +35,6 @@ NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 > ninja
 > sudo ninja install
 ```
-NB! For a way better look, change duckduckgo's theme to __dark__.
 
 ### Showcase
 <img src="res/previews/xupric_start.png">
