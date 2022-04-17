@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "util/util.h"
+#include "cfg/cfg.h"
 #include "cookie.h"
 
 static sqlite3 *db;
@@ -12,8 +13,14 @@ static int cookies_len;
 
 void cookie_init(char *file)
 {
+	conf_opt *config;
+
 	if (sqlite3_open(file, &db))
 		die(1, "[ERROR] Unable to open the cookies database\n");
+
+	config = cfg_get();
+	if (config[conf_ddg_dark].i)
+		cookie_ddg_dark_theme_set();
 }
 
 void cookie_remove(struct cookie *c)
@@ -84,6 +91,21 @@ struct cookie *cookie_p_get(void)
 int cookie_len_get(void)
 {
 	return cookies_len;
+}
+
+void cookie_ddg_dark_theme_set(void)
+{
+	char *sql;
+
+	/* for start.duckduckgo.com */
+	sql = "INSERT INTO moz_cookies(name, value, host, path, expiry, isSecure, isHttpOnly, sameSite) VALUES(\"ae\", \"d\", \"start.duckduckgo.com\", \"/\", -2, 1, 0, 1);";
+
+	sqlite3_exec(db, sql, NULL, NULL, NULL);
+
+	/* for duckduckgo.com */
+	sql = "INSERT INTO moz_cookies(name, value, host, path, expiry, isSecure, isHttpOnly, sameSite) VALUES(\"ae\", \"d\", \"duckduckgo.com\", \"/\", -2, 1, 0, 1);";
+
+	sqlite3_exec(db, sql, NULL, NULL, NULL);
 }
 
 void cookie_cleanup(void)
