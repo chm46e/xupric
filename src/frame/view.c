@@ -13,6 +13,7 @@
 #include "view.h"
 #include "style.h"
 
+static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na);
 static void uri_changed(WebKitWebView *);
 static void uri_load_progress(WebKitWebView *v);
 
@@ -174,9 +175,19 @@ void view_list_create(void)
 			G_CALLBACK(uri_changed), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "notify::estimated-load-progress",
 			G_CALLBACK(uri_load_progress), NULL);
+		g_signal_connect(G_OBJECT(views[i]), "create",
+			G_CALLBACK(uri_blank_handle), NULL);
 	}
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
+}
+
+static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na)
+{
+	uri_custom_load(current_frame_get(), (char *)webkit_uri_request_get_uri(
+		webkit_navigation_action_get_request(na)), 0);
+
+	return NULL;
 }
 
 static void uri_changed(WebKitWebView *)
