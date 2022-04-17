@@ -29,7 +29,7 @@ void history_add(char *text)
 	char *sql;
 	char *err;
 
-	sql = ecalloc(150, sizeof(char));
+	sql = ecalloc(1500, sizeof(char));
 
 	strcpy(sql, "INSERT INTO history(uri) VALUES(\'");
 	strcat(sql, text);
@@ -49,7 +49,7 @@ void history_remove(struct history *h)
 	char *err;
 	char id[11];
 
-	sql = ecalloc(150, sizeof(char));
+	sql = ecalloc(1500, sizeof(char));
 
 	snprintf(id, 11, "%i", h->id);
 	strcpy(sql, "DELETE FROM history WHERE id = \'");
