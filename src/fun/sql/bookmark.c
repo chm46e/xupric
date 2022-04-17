@@ -29,7 +29,7 @@ void bookmark_add(char *text)
 	char *sql;
 	char *err;
 
-	sql = ecalloc(1500, sizeof(char));
+	sql = ecalloc(5000, sizeof(char));
 
 	strcpy(sql, "INSERT INTO books(uri) VALUES(\'");
 	strcat(sql, text);
@@ -49,7 +49,7 @@ void bookmark_remove(struct bookmark *b)
 	char *err;
 	char id[11];
 
-	sql = ecalloc(1500, sizeof(char));
+	sql = ecalloc(5000, sizeof(char));
 
 	snprintf(id, 11, "%i", b->id);
 	strcpy(sql, "DELETE FROM books WHERE id = \'");
@@ -69,7 +69,7 @@ void bookmark_remove_by_uri(char *uri)
 	char *sql;
 	char *err;
 
-	sql = ecalloc(1500, sizeof(char));
+	sql = ecalloc(5000, sizeof(char));
 
 	strcpy(sql, "DELETE FROM books WHERE uri = \'");
 	strcat(sql, uri);
@@ -128,7 +128,7 @@ int bookmark_exists(char *book)
 	sqlite3_stmt *stmt;
 	int exists = 0;
 
-	sql = ecalloc(1500, sizeof(char));
+	sql = ecalloc(5000, sizeof(char));
 
 	strcpy(sql, "SELECT uri FROM books WHERE uri = \'");
 	strcat(sql, book);
