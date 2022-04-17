@@ -1,9 +1,9 @@
-#ifndef _PATH_H
-#define _PATH_H
+#ifndef _UTIL_PATH_H
+#define _UTIL_PATH_H
 
-extern char *home_path_get(void);
-extern char *home_path_expand(char *path);
-extern char *path_create(char *path);
-extern char *file_create(char *path);
+char *home_path_get(void);
+char *home_path_expand(char *path);
+char *path_create(char *path);
+char *file_create(char *path);
 
-#endif /* _PATH_H */
+#endif /* _UTIL_PATH_H */

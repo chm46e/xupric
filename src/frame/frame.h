@@ -15,12 +15,9 @@ struct frame {
 	float zoom;
 };
 
-extern void frame_list_create(void);
-extern void view_order_show(int increment);
-extern void view_show(int id);
-extern struct frame **frames_get(void);
-extern struct frame *current_frame_get(void);
-extern GtkBuilder *builder_get(void);
-extern void frame_cleanup(void);
+void frame_list_create(void);
+struct frame *frames_get(void);
+struct frame *current_frame_get(void);
+GtkBuilder *builder_get(void);
 
 #endif /* _FRAME_FRAME_H */

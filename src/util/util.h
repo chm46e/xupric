@@ -1,8 +1,10 @@
-#ifndef _UTIL_H
-#define _UTIL_H
+#ifndef _UTIL_UTIL_H
+#define _UTIL_UTIL_H
 
-extern void die(int exit_code, const char *err, ...);
-extern void *emalloc(int size);
-extern void *ecalloc(int num, int size);
+void die(int exit_code, const char *err, ...);
+void *emalloc(int size);
+void *ecalloc(int num, int size);
+void *erealloc(void *p, int size);
+void efree(void *p);
 
-#endif /* _UTIL_H */
+#endif /* _UTIL_UTIL_H */

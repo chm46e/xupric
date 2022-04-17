@@ -1,21 +1,36 @@
-project('xupric', 'c', version: '0.1.0', 
-  default_options: ['warning_level=3'])
+project('xupric', 'c',
+        version: '1.0',
+        default_options: ['warning_level=3'])
 
 add_global_arguments('-Wno-pedantic', language : 'c')
 
+src = [
+  'src/cfg/cfg.c',
+  'src/cfg/config.c',
+  'src/frame/offs/offs.c',
+  'src/frame/download.c',
+  'src/frame/frame.c',
+  'src/frame/view.c',
+  'src/fun/sql/bookmark.c',
+  'src/fun/sql/cookie.c',
+  'src/fun/sql/history.c',
+  'src/fun/fun.c',
+  'src/uri/uri.c',
+  'src/util/atom.c',
+  'src/util/path.c',
+  'src/util/util.c',
+  'src/xupric.c',
+]
+incs = include_directories('src/')
+
 cc = meson.get_compiler('c')
 cfg_lib_dirs = ['/usr/local/lib/', '/usr/lib', '/usr/share/lib']
-cfg_dep = cc.find_library('libconfuse', dirs: cfg_lib_dirs) 
-
+cfg_dep = cc.find_library('libconfuse', dirs: cfg_lib_dirs)
 sql_dep = dependency('sqlite3')
-
 gtk_dep = dependency('gtk+-3.0')
 x11_dep = dependency('x11', method: 'pkg-config')
 webkit_dep = dependency('webkit2gtk-4.0', method: 'pkg-config')
 
-src = ['src/xupric.c', 'src/cfg/cfg.c', 'src/cfg/config.c', 'src/frame/frame.c', 'src/frame/handle.c', 'src/uri/uri.c', 'src/util/util.c', 'src/util/atom.c', 'src/util/path.c', 'src/extras/bookmark.c', 'src/extras/history.c', 'src/frame/download.c', 'src/extras/cookie.c']
-
-incs = include_directories('src/')
 ldflags = ['-l:libconfuse.a', '-lgthread-2.0']
 
 custom_target('before_build',
