@@ -97,6 +97,11 @@ void cookie_ddg_dark_theme_set(void)
 {
 	char *sql;
 
+	/* remove dups */
+	sql = "DELETE FROM moz_cookies WHERE (host=\"start.duckduckgo.com\" OR host=\"duckduckgo.com\") AND name=\"ae\";";
+
+	sqlite3_exec(db, sql, NULL, NULL, NULL);
+
 	/* for start.duckduckgo.com */
 	sql = "INSERT INTO moz_cookies(name, value, host, path, expiry, isSecure, isHttpOnly, sameSite) VALUES(\"ae\", \"d\", \"start.duckduckgo.com\", \"/\", -2, 1, 0, 1);";
 
