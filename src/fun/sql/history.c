@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "cfg/cfg.h"
 #include "util/util.h"
 #include "history.h"
 
@@ -13,6 +14,7 @@ static int history_len;
 void history_init(char *file)
 {
 	char *sql;
+	conf_opt *config;
 
 	if (sqlite3_open(file, &db))
 		die(1, "[ERROR] Unable to open the history database\n");
@@ -22,6 +24,10 @@ void history_init(char *file)
 
 	/* ignore already exists errors */
 	sqlite3_exec(db, sql, NULL, NULL, NULL);
+
+	config = cfg_get();
+	if (config[conf_history_autoremove].i)
+		history_remove_all();
 }
 
 void history_add(char *text)

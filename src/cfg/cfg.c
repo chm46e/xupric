@@ -20,6 +20,7 @@ conf_opt *cfg_load(char *name)
 	cfg_opt_t opts[] = {
 		CFG_STR("cache_prefix", "~/.cache/xupric", CFGF_NONE),
 		CFG_BOOL("ephemeral", cfg_false, CFGF_NONE),
+		CFG_BOOL("history_autoremove", cfg_true, CFGF_NONE),
 		CFG_BOOL("java", cfg_true, CFGF_NONE),
 		CFG_BOOL("javascript", cfg_true, CFGF_NONE),
 		CFG_BOOL("xss_auditor", cfg_true, CFGF_NONE),
@@ -55,6 +56,7 @@ conf_opt *cfg_load(char *name)
 
 	config[conf_cache_prefix].s = strdup(cfg_getstr(cfg, "cache_prefix"));
 	config[conf_ephemeral].i = cfg_getbool(cfg, "ephemeral");
+	config[conf_history_autoremove].i = cfg_getbool(cfg, "history_autoremove");
 	config[conf_java].i = cfg_getbool(cfg, "java");
 	config[conf_javascript].i = cfg_getbool(cfg, "javascript");
 	config[conf_xss_auditor].i = cfg_getbool(cfg, "xss_auditor");
