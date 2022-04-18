@@ -1,6 +1,9 @@
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
+#include <string.h>
 
+#include "frame/frame.h"
+#include "cfg/config.h"
 #include "util/util.h"
 #include "uri/uri.h"
 #include "fun/sql/bookmark.h"
@@ -8,7 +11,62 @@
 #include "fun/sql/cookie.h"
 #include "frame/gwrap.h"
 
+static void find_start(GtkWidget *e, GtkWidget *w);
+static int find_win_key_press(GtkWidget *w, GdkEvent *ev);
 static void win_bookmark_empty(GtkWidget *mbox);
+
+void win_find_build(GtkWidget *)
+{
+	GtkWidget *win, *mbox, *label, *entry;
+
+	win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_default_size(GTK_WINDOW(win), 300, 50);
+	gtk_window_set_transient_for(GTK_WINDOW(win), GTK_WINDOW(current_frame_get()->win));
+	gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_CENTER_ON_PARENT);
+	gtk_window_set_decorated(GTK_WINDOW(win), 0);
+
+	mbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_widget_set_margin_start(mbox, 10);
+	gtk_widget_set_margin_end(mbox, 10);
+	gtk_widget_set_margin_top(mbox, 10);
+	gtk_widget_set_margin_bottom(mbox, 10);
+
+	label = gtk_label_new_with_mnemonic("Find:");
+	gtk_widget_set_margin_start(label, 5);
+	gtk_widget_set_margin_end(label, 10);
+	gtk_box_pack_start(GTK_BOX(mbox), label, 0, 0, 0);
+
+	entry = gtk_entry_new();
+	gtk_box_pack_start(GTK_BOX(mbox), entry, 1, 1, 0);
+
+	g_signal_connect(entry, "activate", G_CALLBACK(find_start), win);
+	g_signal_connect(win, "key-press-event", G_CALLBACK(find_win_key_press), NULL);
+
+	gtk_container_add(GTK_CONTAINER(win), mbox);
+	gtk_widget_show_all(win);
+}
+
+static void find_start(GtkWidget *e, GtkWidget *w)
+{
+	webkit_find_controller_search(
+		webkit_web_view_get_find_controller(current_frame_get()->view),
+		gtk_entry_get_text(GTK_ENTRY(e)),
+		WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE|WEBKIT_FIND_OPTIONS_WRAP_AROUND,
+		1000);
+
+	gtk_window_close(GTK_WINDOW(w));
+}
+
+static int find_win_key_press(GtkWidget *w, GdkEvent *ev)
+{
+	if (ev->type == GDK_KEY_PRESS) {
+		if (gdk_keyval_to_lower(ev->key.keyval) == GDK_KEY_Escape) {
+			gtk_window_close(GTK_WINDOW(w));
+			return 1;
+		}
+	}
+	return 0;
+}
 
 void win_bookmark_build(GtkWidget *)
 {

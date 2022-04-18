@@ -1,4 +1,5 @@
 #include "frame/frame.h"
+#include "frame/offs/offs.h"
 #include "fun/fun.h"
 #include "uri/uri.h"
 
@@ -55,16 +56,6 @@ static inline void wrap_navigate(union arg *arg)
 	view_navigate(current_frame_get(), arg->i);
 }
 
-static inline void wrap_find_start(union arg *)
-{
-	webkit_find_controller_search(
-		webkit_web_view_get_find_controller(current_frame_get()->view),
-		gtk_clipboard_wait_for_text(gtk_clipboard_get_default(
-			GDK_DISPLAY(gtk_widget_get_display(current_frame_get()->win)))),
-		WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE|WEBKIT_FIND_OPTIONS_WRAP_AROUND,
-		1000);
-}
-
 static inline void wrap_find_next(union arg *)
 {
 	webkit_find_controller_search_next(webkit_web_view_get_find_controller(
@@ -75,4 +66,9 @@ static inline void wrap_find_previous(union arg *)
 {
 	webkit_find_controller_search_previous(webkit_web_view_get_find_controller(
 		current_frame_get()->view));
+}
+
+static inline void wrap_win_find_build(union arg *)
+{
+	win_find_build(NULL);
 }
