@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
+#include <string.h>
 
 #include "util/atom.h"
 #include "util/path.h"
@@ -96,9 +97,14 @@ void uri_custom_load(struct frame *f, char *uri, int secondary)
 		else
 			xpath = (char *)uri;
 
+
 		if (!(access(xpath, R_OK)) && (rpath = realpath(xpath, NULL))) {
 			url = g_strdup_printf("file://%s", rpath);
 			efree(rpath);
+		} else if (strstr(uri, ".com") ||
+			strstr(uri, ".org") ||
+			strstr(uri, ".net")) {
+			url = g_strdup_printf("https://%s", uri);
 		} else {
 			if (secondary)
 				url = g_strdup_printf("%s?q=%s",
