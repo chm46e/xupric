@@ -72,3 +72,8 @@ static inline void wrap_win_find_build(union arg *)
 {
 	win_find_build(NULL);
 }
+
+static inline void wrap_bookmark_toggle(union arg *)
+{
+	bookmark_button_toggle_handle(NULL);
+}

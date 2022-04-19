@@ -16,6 +16,7 @@ struct frame {
 };
 
 void frame_list_create(void);
+void bookmark_button_toggle_handle(GtkWidget *);
 struct frame *frames_get(void);
 struct frame *current_frame_get(void);
 GtkBuilder *builder_get(void);

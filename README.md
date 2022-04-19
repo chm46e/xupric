@@ -51,6 +51,7 @@ NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 | ctrl+f         | start find       |
 | ctrl+n         | find next        |
 | ctrl+shift+n   | find previous    |
+| ctrl+b         | bookmark toggle  |
 | Esc            | stop loading & finish find|
 | F11            | fullscreen toggle|
 | alt+h          | goto home/start  |

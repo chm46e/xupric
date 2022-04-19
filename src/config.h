@@ -27,6 +27,7 @@ static struct key keys[] = {
 	{CKEY, GDK_KEY_f, wrap_win_find_build, {0}},
 	{CKEY, GDK_KEY_n, wrap_find_next, {0}},
 	{CKEY|SKEY, GDK_KEY_n, wrap_find_previous, {0}},
+	{CKEY, GDK_KEY_b, wrap_bookmark_toggle, {0}},
 
 	{AKEY, GDK_KEY_Left, wrap_navigate, {1}},
 	{AKEY, GDK_KEY_Right, wrap_navigate, {0}},

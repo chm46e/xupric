@@ -20,7 +20,6 @@
 static void frame_signals_connect(void);
 static void bar_uri_enter_handle(GtkWidget *b);
 static int window_event_handle(GtkWidget *, GdkEvent *ev);
-static void bookmark_button_toggle_handle(GtkWidget *);
 
 static GtkBuilder *builder;
 static struct frame *frames;
@@ -144,7 +143,7 @@ static int window_event_handle(GtkWidget *, GdkEvent *ev)
 	return 0;
 }
 
-static void bookmark_button_toggle_handle(GtkWidget *)
+void bookmark_button_toggle_handle(GtkWidget *)
 {
 	GtkImage *bookmark_image;
 	char *uri;
