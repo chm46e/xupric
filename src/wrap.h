@@ -82,3 +82,8 @@ static inline void wrap_debug_toggle(union arg *)
 {
 	debug_toggle();
 }
+
+static inline void wrap_download_page(union arg *)
+{
+	download_current_page();
+}

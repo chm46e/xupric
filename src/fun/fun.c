@@ -4,6 +4,7 @@
 
 #include "cfg/cfg.h"
 #include "frame/frame.h"
+#include "uri/uri.h"
 
 void zoom_action(struct frame *f, int action)
 {
@@ -48,4 +49,12 @@ void debug_toggle(void)
 {
 	conf_opt *config = cfg_get();
 	config[conf_debug].i = !(config[conf_debug].i);
+}
+
+void download_current_page(void)
+{
+	struct frame *f;
+
+	f = current_frame_get();
+	webkit_web_view_download_uri(f->view, uri_get(f));
 }
