@@ -66,6 +66,11 @@ static int download_filename_choose(WebKitDownload *d)
 		return 0;
 	}
 
+	if (uri == NULL) {
+		webkit_download_cancel(d);
+		return 0;
+	}
+
 	webkit_download_set_destination(d, uri);
 	return 1;
 }
