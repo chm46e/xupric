@@ -31,6 +31,10 @@ label {
 	caret-color: @text;
 }
 
+undershoot, overshoot {
+	background-color: rgba(0, 0, 0, 0);
+}
+
 #menu_download_label {
 	font-family: "JetBrainsMono Nerd Font", sans-serif;
 	caret-color: @text;
