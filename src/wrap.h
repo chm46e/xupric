@@ -78,6 +78,11 @@ static inline void wrap_bookmark_toggle(union arg *)
 	bookmark_button_toggle_handle(NULL);
 }
 
+static inline void wrap_dark_mode_toggle(union arg *)
+{
+	dark_mode_button_toggle_handle(NULL);
+}
+
 static inline void wrap_debug_toggle(union arg *)
 {
 	debug_toggle();

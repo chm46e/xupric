@@ -4,6 +4,7 @@
 #include "fun/sql/bookmark.h"
 #include "fun/sql/history.h"
 #include "frame/frame.h"
+#include "frame/style/style.h"
 #include "util/util.h"
 #include "cfg/cfg.h"
 #include "cfg/config.h"
@@ -11,7 +12,6 @@
 
 #include "download.h"
 #include "view.h"
-#include "style.h"
 
 static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na);
 static void uri_changed(WebKitWebView *);
@@ -40,6 +40,7 @@ void view_show(int id)
 {
 	GtkBuilder *builder;
 	WebKitWebView *dview;
+	GtkImage *dark_mode_image;
 	GtkWidget *box;
 	struct frame *frames;
 	char zoom[5];
@@ -71,6 +72,13 @@ void view_show(int id)
 	sprintf(zoom, "%i%%", (int)(frames[id].zoom*100));
 	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder,
 	"menu_zoom_reset_label")), zoom);
+
+	dark_mode_image = GTK_IMAGE(gtk_builder_get_object(builder, "dark_mode_image"));
+	if (frames[id].dark_mode)
+		gtk_image_set_from_icon_name(dark_mode_image, "night-light-symbolic", 18);
+	else
+		gtk_image_set_from_icon_name(dark_mode_image, "night-light-disabled-symbolic",
+			18);
 }
 
 void view_list_create(void)
@@ -166,7 +174,7 @@ void view_list_create(void)
 			NULL);
 
 		if (config[conf_dark_mode].i)
-			style_file_set(views[i], config_names[5]);
+			dark_mode_set(views[i]);
 		if (config[conf_scrollbar].i)
 			style_file_set(views[i], config_names[6]);
 

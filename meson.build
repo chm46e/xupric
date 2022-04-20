@@ -8,6 +8,7 @@ src = [
   'src/cfg/cfg.c',
   'src/cfg/config.c',
   'src/frame/offs/offs.c',
+  'src/frame/style/style.c',
   'src/frame/download.c',
   'src/frame/frame.c',
   'src/frame/view.c',

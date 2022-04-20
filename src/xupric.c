@@ -8,6 +8,7 @@
 #include "frame/frame.h"
 #include "fun/fun.h"
 #include "frame/view.h"
+#include "frame/style/style.h"
 #include "util/atom.h"
 #include "uri/uri.h"
 #include "cfg/config.h"
@@ -58,6 +59,7 @@ static void setup(void)
 	bookmark_init(config_names[8]);
 	history_init(cache_names[5]);
 	cookie_init(cache_names[0]);
+	style_init();
 }
 
 static void cleanup(void)

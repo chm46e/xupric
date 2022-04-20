@@ -1,7 +1,9 @@
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
 
+#include "frame/style/style.h"
 #include "util/util.h"
+#include "cfg/cfg.h"
 #include "cfg/config.h"
 #include "offs/offs.h"
 #include "uri/uri.h"
@@ -50,6 +52,7 @@ void frame_list_create(void)
 		frames[i].view = views_get()[i];
 		frames[i].win = win;
 		frames[i].empty = 1;
+		frames[i].dark_mode = cfg_get()[conf_dark_mode].i;
 		frames[i].zoom = 1.0;
 		frames[i].finder = webkit_web_view_get_find_controller(frames[i].view);
 	}
@@ -67,6 +70,8 @@ static void frame_signals_connect(void)
 		gtk_builder_get_object(builder, "uri_buffer_secondary"));
 	g_signal_connect(gtk_builder_get_object(builder, "bar_bookmark_button"), "clicked",
 		G_CALLBACK(bookmark_button_toggle_handle), NULL);
+	g_signal_connect(gtk_builder_get_object(builder, "bar_dark_mode_button"), "clicked",
+		G_CALLBACK(dark_mode_button_toggle_handle), NULL);
 	g_signal_connect(gtk_builder_get_object(builder, "menu_quit_button"), "clicked",
 		G_CALLBACK(window_close), NULL);
 	g_signal_connect(gtk_builder_get_object(builder, "help_about_button"), "clicked",
@@ -149,7 +154,7 @@ void bookmark_button_toggle_handle(GtkWidget *)
 	char *uri;
 
 	uri = uri_get(current_frame_get());
-	bookmark_image = GTK_IMAGE(gtk_builder_get_object(builder_get(), "bookmark_image"));
+	bookmark_image = GTK_IMAGE(gtk_builder_get_object(builder, "bookmark_image"));
 
 	if (bookmark_exists(uri)) {
 		bookmark_remove_by_uri(uri);
@@ -158,6 +163,25 @@ void bookmark_button_toggle_handle(GtkWidget *)
 		bookmark_add(uri);
 		gtk_image_set_from_icon_name(bookmark_image, "xupric_star_yes", 18);
 	}
+}
+
+void dark_mode_button_toggle_handle(GtkWidget *)
+{
+	GtkImage *dark_mode_image;
+	struct frame *f;
+
+	dark_mode_image = GTK_IMAGE(gtk_builder_get_object(builder, "dark_mode_image"));
+	f = current_frame_get();
+	if (f->dark_mode) {
+		dark_mode_remove(f->view);
+		f->dark_mode = 0;
+		gtk_image_set_from_icon_name(dark_mode_image, "night-light-disabled-symbolic", 18);
+	} else {
+		dark_mode_set(f->view);
+		f->dark_mode = 1;
+		gtk_image_set_from_icon_name(dark_mode_image, "night-light-symbolic", 18);
+	}
+
 }
 
 struct frame *frames_get(void)

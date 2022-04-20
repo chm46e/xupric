@@ -52,6 +52,7 @@ NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 | ctrl+n         | find next        |
 | ctrl+shift+n   | find previous    |
 | ctrl+b         | bookmark toggle  |
+| ctrl+d         | dark mode toggle |
 | ctrl+shift+d   | debug toggle     |
 | ctrl+s         | download page    |
 | Esc            | stop loading & finish find|
