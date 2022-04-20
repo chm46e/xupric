@@ -10,7 +10,6 @@ struct frame {
 	WebKitWebView *view;
 	WebKitFindController *finder;
 	Window winid;
-	char *uri;
 	int empty, fullscreen;
 	float zoom;
 };

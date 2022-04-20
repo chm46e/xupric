@@ -60,12 +60,11 @@ void view_show(int id)
 
 	if (frames[id].empty) {
 		uri_search_engine_load(&frames[id]);
-		frames[id].uri = uri_get(&frames[id]);
 		frames[id].empty = 0;
 	}
 
 	gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(builder, "bar_uri_entry")),
-		frames[id].uri);
+		uri_get(&frames[id]));
 	gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(builder,
 		"bar_uri_entry_secondary")), "");
 
@@ -202,7 +201,6 @@ static void uri_changed(WebKitWebView *)
 	uri = uri_get(current_frame_get());
 	if (strcmp(gtk_entry_get_text(e), uri)) {
 		gtk_entry_set_text(e, uri);
-		current_frame_get()->uri = uri;
 	}
 
 	bookmark_image = GTK_IMAGE(gtk_builder_get_object(builder, "bookmark_image"));
