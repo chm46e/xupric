@@ -2,6 +2,7 @@
 
 #include <signal.h>
 #include <wait.h>
+#include <stdio.h>
 
 #include "util/util.h"
 #include "cfg/cfg.h"
@@ -20,8 +21,12 @@ static void sigchld();
 static void sighup();
 static void sigint();
 static void setup(void);
-static void parameter_handle(int argc, char *[]);
+static void show_help(void);
+static void show_version_info(void);
+static int parameter_handle(int argc, char *argv[]);
 static void cleanup(void);
+
+static char *uri = "";
 
 static void sigchld()
 {
@@ -76,24 +81,65 @@ static void cleanup(void)
 	xdisplay_close();
 }
 
-static void parameter_handle(int argc, char *[])
+static void show_help(void)
 {
-	if (argc >= 2) {
+	printf("xupric: A Modern Web Browser based on webkit2gtk\n" \
+		   "Usage: xupric [options] [uri]\n\n" \
+		   "Options: \n"
+		   "  -p (--private) open in private mode\n" \
+		   "  -d (--debug)   enable debugging\n" \
+		   "  -v (--version) show version info\n" \
+		   "  -h (--help)    show this message\n\n" \
+		   "About: \n" \
+		   "https://github.com/chm46e/xupric");
+}
 
-	} else {
-		uri_init();
+static void show_version_info(void)
+{
+	printf("Xupric, version 1.0");
+}
+
+static int parameter_handle(int argc, char *argv[])
+{
+	int i;
+
+	if (argc >= 2) {
+		for (i = 1; i < argc; i++) {
+			if (argv[i][0] == '-') {
+				if (!(strcmp(argv[i], "-v")) || !(strcmp(argv[i], "--version"))) {
+					show_version_info();
+					return 0;
+				} else if (!(strcmp(argv[i], "-d")) || !(strcmp(argv[i], "--debug"))) {
+					cfg_get()[conf_debug].i = 1;
+				} else if (!(strcmp(argv[i], "-p")) || !(strcmp(argv[i], "--private"))) {
+					cfg_get()[conf_ephemeral].i = 1;
+				} else {
+					show_help();
+					return 0;
+				}
+			} else {
+				uri = argv[i];
+				return 1;
+			}
+		}
 	}
+	return 1;
 }
 
 int main(int argc, char *argv[])
 {
 	setup();
-	parameter_handle(argc, argv);
 
-	frame_list_create();
-	view_show(0);
+	if (parameter_handle(argc, argv)) {
+		uri_init();
+		frame_list_create();
+		view_show(0);
 
-	gtk_main();
+		if (strcmp(uri, ""))
+			uri_custom_load(current_frame_get(), uri, 0);
+
+		gtk_main();
+	}
 
 	cleanup();
 	return 0;
