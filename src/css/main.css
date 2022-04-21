@@ -75,6 +75,10 @@ button:active {
 	text-shadow: none;
 }
 
+button label {
+	text-shadow: none;
+}
+
 menu, menu * {
 	background-color: @uri;
 	border: none;

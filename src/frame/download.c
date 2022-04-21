@@ -7,7 +7,7 @@
 static GtkBuilder *builder;
 static WebKitDownload *download_last = 0;
 
-static int download_filename_choose(WebKitDownload *d);
+static int download_filename_choose(WebKitDownload *d, char *fn);
 static void download_destination_created(WebKitDownload *, char *dest);
 static void download_progress_changed(WebKitDownload *d);
 static void download_finished(WebKitDownload *);
@@ -28,9 +28,9 @@ void download_started(WebKitWebContext *, WebKitDownload *d)
 	download_last = d;
 }
 
-static int download_filename_choose(WebKitDownload *d)
+static int download_filename_choose(WebKitDownload *d, char *dest)
 {
-	GtkWidget *chooser, *btc, *btd;
+	GtkWidget *chooser;
 	int ret;
 	char *uri;
 
@@ -39,18 +39,10 @@ static int download_filename_choose(WebKitDownload *d)
 		NULL, NULL);
 	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(chooser), 0);
 
-	/*
-	 * doesn't get it for some reason:
-	 * soup_message_headers_get_content_disposition(
-	 *     webkit_uri_response_get_http_headers(webkit_download_get_response(d)),
-	 *     dest, NULL));
-	 * gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(chooser), dest);
-	 */
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(chooser), dest);
 
-	btc = gtk_dialog_add_button(GTK_DIALOG(chooser), "Cancel", 0);
-	btd = gtk_dialog_add_button(GTK_DIALOG(chooser), "Download", 1);
-	gtk_button_set_relief(GTK_BUTTON(btc), GTK_RELIEF_NONE);
-	gtk_button_set_relief(GTK_BUTTON(btd), GTK_RELIEF_NONE);
+	gtk_dialog_add_button(GTK_DIALOG(chooser), "Cancel", 0);
+	gtk_dialog_add_button(GTK_DIALOG(chooser), "Download", 1);
 
 	ret = gtk_dialog_run(GTK_DIALOG(chooser));
 
