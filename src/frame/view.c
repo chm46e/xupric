@@ -200,6 +200,7 @@ static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na)
 static void uri_changed(WebKitWebView *)
 {
 	GtkBuilder *builder;
+	GtkCssProvider *css;
 	GtkImage *bookmark_image;
 	GtkEntry *e;
 	char *uri;
@@ -207,15 +208,24 @@ static void uri_changed(WebKitWebView *)
 	builder = builder_get();
 	e = GTK_ENTRY(gtk_builder_get_object(builder, "bar_uri_entry"));
 	uri = uri_get(current_frame_get());
+	css = gtk_css_provider_new();
 	if (strcmp(gtk_entry_get_text(e), uri)) {
 		gtk_entry_set_text(e, uri);
 	}
 
 	bookmark_image = GTK_IMAGE(gtk_builder_get_object(builder, "bookmark_image"));
-	if (bookmark_exists(uri))
-		gtk_image_set_from_icon_name(bookmark_image, "xupric_star_yes", 18);
-	else
-		gtk_image_set_from_icon_name(bookmark_image, "xupric_star_no", 18);
+	if (bookmark_exists(uri)) {
+		gtk_css_provider_load_from_data(css, "#bookmark_image { color: #f0c674; }",
+			-1, NULL);
+		gtk_image_set_from_icon_name(bookmark_image, "starred-symbolic", 18);
+	} else {
+		gtk_css_provider_load_from_data(css, "#bookmark_image { color: #abadac; }",
+			-1, NULL);
+		gtk_image_set_from_icon_name(bookmark_image, "non-starred-symbolic", 18);
+	}
+	gtk_style_context_add_provider(gtk_widget_get_style_context(
+		GTK_WIDGET(bookmark_image)), GTK_STYLE_PROVIDER(css),
+		GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 	if (strcmp(uri, uri_last))
 		history_add(uri);

@@ -24,6 +24,7 @@ Moderately inspired by surf.
 * x11 \<required\>
 * gtk3 \<required\>
 * JetBrainsMono Nerd Font \<recommended\>
+* <a href="https://github.com/cbrnix/Flatery">Flatery-Dark icon theme</a> \<recommended\>
 * appmenu-gtk-module \<optional\>
 
 NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.

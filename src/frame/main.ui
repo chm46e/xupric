@@ -3,12 +3,13 @@
 <interface>
   <requires lib="gtk+" version="3.22"/>
   <object class="GtkImage" id="bookmark_image">
+    <property name="name">bookmark_image</property>
     <property name="width_request">-1</property>
     <property name="height_request">-1</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixel_size">18</property>
-    <property name="icon_name">xupric_star_no</property>
+    <property name="icon_name">non-starred-symbolic</property>
   </object>
   <object class="GtkPopover" id="cookies_popover">
     <property name="name">cookies_popover</property>
@@ -1365,7 +1366,7 @@ you'll land among the stars.</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="pixel_size">18</property>
-                        <property name="icon_name">xupric_main_menu</property>
+                        <property name="icon_name">open-menu-symbolic</property>
                       </object>
                     </child>
                   </object>
