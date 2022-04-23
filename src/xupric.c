@@ -61,7 +61,7 @@ static void setup(void)
 
 	config_cache_create();
 	atoms_init();
-	bookmark_init(config_names[8]);
+	bookmark_init(config_names[7]);
 	history_init(cache_names[5]);
 	cookie_init(cache_names[0]);
 	style_init();

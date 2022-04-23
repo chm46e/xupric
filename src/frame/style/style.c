@@ -10,8 +10,8 @@ void style_init(void)
 {
 	gchar *style;
 
-	if (!g_file_get_contents(config_names[5], &style, NULL, NULL)) {
-		die(1, "[ERROR] Unable to read the style file: %s\n", config_names[5]);
+	if (!g_file_get_contents(config_names[4], &style, NULL, NULL)) {
+		die(1, "[ERROR] Unable to read the style file: %s\n", config_names[4]);
 	}
 
 	dark_style = webkit_user_style_sheet_new(style,

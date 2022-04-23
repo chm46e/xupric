@@ -97,7 +97,6 @@ void uri_custom_load(struct frame *f, char *uri, int secondary)
 		else
 			xpath = (char *)uri;
 
-
 		if (!(access(xpath, R_OK)) && (rpath = realpath(xpath, NULL))) {
 			url = g_strdup_printf("file://%s", rpath);
 			efree(rpath);

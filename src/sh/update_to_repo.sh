@@ -10,8 +10,8 @@ if [ "$test" = "" ]; then
 fi
 
 cp -f ~/.config/xupric/xupric.conf ../../
-cp -f ~/.config/xupric/styles/main.css ../css/
-cp -f ~/.config/xupric/styles/dark_mode.css ../css/
-cp -f ~/.config/xupric/styles/scrollbar.css ../css/
+cp -f ~/.config/xupric/styles/app/main.css ../css/
+cp -f ~/.config/xupric/styles/app/dark_mode.css ../css/
+cp -f ~/.config/xupric/styles/app/scrollbar.css ../css/
 
 printf "Update completed"

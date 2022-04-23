@@ -4,6 +4,13 @@
 extern char *config_names[];
 extern char *cache_names[];
 
+extern char **style_names;
+extern int style_names_len;
+extern char **script_names;
+extern int script_names_len;
+extern char **cert_names;
+extern int cert_names_len;
+
 void config_cache_create(void);
 void config_cache_cleanup(void);
 

@@ -87,7 +87,12 @@ void view_list_create(void)
     WebKitWebContext *context;
     WebKitCookieManager *cookiemanager;
     WebKitWebsiteDataManager *datamanager;
+	WebKitUserStyleSheet **css;
+	WebKitUserScript **script;
+	GTlsCertificate *cert;
 	conf_opt *config;
+	char *content, *file;
+	int i, j;
 
 	config = cfg_get();
     settings = webkit_settings_new_with_settings(
@@ -165,18 +170,76 @@ void view_list_create(void)
 	}
 
 	views = ecalloc(10, sizeof(WebKitWebView));
+	css = ecalloc(style_names_len, sizeof(WebKitUserStyleSheet *));
+	script = ecalloc(script_names_len, sizeof(WebKitUserScript *));
 
-	for (int i = 0; i < 10; i++) {
+	for (i = 0; i < style_names_len; i++) {
+		file = g_strdup_printf("%s%s", config_names[2], style_names[i]);
+		if (!g_file_get_contents(file, &content, NULL, NULL))
+			die(1, "[ERROR] Unable to read style file: %s\n", file);
+
+		const gchar *allow[] = { g_strdup_printf("https://%s/*", style_names[i]), NULL };
+		css[i] = webkit_user_style_sheet_new(content,
+			WEBKIT_USER_CONTENT_INJECT_ALL_FRAMES,
+			WEBKIT_USER_STYLE_LEVEL_USER,
+			allow,
+			NULL);
+
+		g_free(content);
+		g_free(file);
+	}
+
+	for (i = 0; i < script_names_len; i++) {
+		file = g_strdup_printf("%s%s", config_names[1], script_names[i]);
+		if (!g_file_get_contents(file, &content, NULL, NULL))
+			die(1, "[ERROR] Unable to read script file: %s\n", file);
+
+		const gchar *allow[] = { g_strdup_printf("https://%s/*", script_names[i]), NULL };
+		script[i] = webkit_user_script_new(content,
+			WEBKIT_USER_CONTENT_INJECT_ALL_FRAMES,
+			WEBKIT_USER_SCRIPT_INJECT_AT_DOCUMENT_START,
+			allow,
+			NULL);
+
+		g_free(content);
+		g_free(file);
+	}
+
+	for (i = 0; i < cert_names_len; i++) {
+		file = g_strdup_printf("%s%s", config_names[3], cert_names[i]);
+		cert = g_tls_certificate_new_from_file(file, NULL);
+
+		if (g_tls_certificate_verify(cert, NULL, NULL) & G_TLS_CERTIFICATE_VALIDATE_ALL)
+			die(1, "[ERROR] Certificate validation failed\n");
+
+		webkit_web_context_allow_tls_certificate_for_host(context, cert, config_names[3]);
+
+		g_free(file);
+	}
+
+	for (i = 0; i < 10; i++) {
 		views[i] = g_object_new(WEBKIT_TYPE_WEB_VIEW,
 			"settings", settings,
 			"user-content-manager", webkit_user_content_manager_new(),
 			"web-context", context,
 			NULL);
 
+		for (j = 0; j < style_names_len; j++) {
+			webkit_user_content_manager_add_style_sheet(
+				webkit_web_view_get_user_content_manager(views[i]),
+				css[j]);
+		}
+
+		for (j = 0; j < script_names_len; j++) {
+			webkit_user_content_manager_add_script(
+				webkit_web_view_get_user_content_manager(views[i]),
+				script[j]);
+		}
+
 		if (config[conf_dark_mode].i)
 			dark_mode_set(views[i]);
 		if (config[conf_scrollbar].i)
-			style_file_set(views[i], config_names[6]);
+			style_file_set(views[i], config_names[5]);
 
 		g_signal_connect(G_OBJECT(views[i]), "load-changed",
 			G_CALLBACK(uri_changed), NULL);
@@ -187,6 +250,11 @@ void view_list_create(void)
 	}
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
+
+	if (style_names_len > 0)
+		efree(css);
+	if (script_names_len > 0)
+		efree(script);
 }
 
 static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na)

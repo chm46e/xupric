@@ -35,7 +35,7 @@ void frame_list_create(void)
 	builder = gtk_builder_new_from_string((const gchar *)main_ui, main_ui_len);
 
 	css = gtk_css_provider_new();
-	gtk_css_provider_load_from_path(css, config_names[7], NULL);
+	gtk_css_provider_load_from_path(css, config_names[6], NULL);
 
 	frame_signals_connect();
 
