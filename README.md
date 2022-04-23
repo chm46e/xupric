@@ -20,10 +20,11 @@ Moderately inspired by surf.
 * <a href="https://github.com/libconfuse/libconfuse">confuse</a> \<required\>
 * webkit2gtk-4.0 \<required\>
 * xxd \<required\>
+* sqlite3 \<required\>
 * meson \<required\>
 * x11 \<required\>
 * gtk3 \<required\>
-* JetBrainsMono Nerd Font \<recommended\>
+* <a href="https://www.nerdfonts.com/font-downloads">JetBrainsMono Nerd Font</a> \<recommended\>
 * <a href="https://github.com/cbrnix/Flatery">Flatery-Dark icon theme</a> \<recommended\>
 * appmenu-gtk-module \<optional\>
 
