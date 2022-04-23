@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mkdir -p ~/.config/xupric/styles/
+mkdir -p ~/.config/xupric/styles/app/
 
 cd ../
 cp -n xupric.conf ~/.config/xupric/
