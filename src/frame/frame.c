@@ -68,6 +68,8 @@ static void frame_signals_connect(void)
 	g_signal_connect(gtk_builder_get_object(builder, "bar_uri_entry_secondary"),
 		"activate", G_CALLBACK(bar_uri_enter_handle),
 		gtk_builder_get_object(builder, "uri_buffer_secondary"));
+	g_signal_connect(gtk_builder_get_object(builder, "bar_fire_button"), "clicked",
+		G_CALLBACK(gwrap_fire_button_handle), NULL);
 	g_signal_connect(gtk_builder_get_object(builder, "bar_bookmark_button"), "clicked",
 		G_CALLBACK(bookmark_button_toggle_handle), NULL);
 	g_signal_connect(gtk_builder_get_object(builder, "bar_dark_mode_button"), "clicked",

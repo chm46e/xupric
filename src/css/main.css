@@ -40,6 +40,17 @@ undershoot, overshoot {
 	caret-color: @text;
 }
 
+#bar_fire_button, #bar_fire_button label {
+	border-radius: 7px;
+	padding: 0px;
+	font-size: 20px;
+	color: @text;
+}
+
+#bar_fire_button:active label {
+	color: @red;
+}
+
 selection {
 	background-color: @text_hl;
 }

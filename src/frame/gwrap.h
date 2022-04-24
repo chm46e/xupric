@@ -79,4 +79,10 @@ static inline void gwrap_cookie_remove_all(GtkWidget *)
 	cookie_remove_all();
 }
 
+static inline void gwrap_fire_button_handle(GtkWidget *)
+{
+	cookie_remove_with_filter();
+	history_remove_all();
+}
+
 #endif /* _FRAME_GWRAP_H */
