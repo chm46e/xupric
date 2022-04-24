@@ -275,7 +275,7 @@ static void uri_changed(WebKitWebView *)
 	GtkCssProvider *css;
 	GtkImage *bookmark_image;
 	GtkEntry *e;
-	char *uri;
+	char *uri, *title;
 
 	builder = builder_get();
 	e = GTK_ENTRY(gtk_builder_get_object(builder, "bar_uri_entry"));
@@ -302,6 +302,13 @@ static void uri_changed(WebKitWebView *)
 	if (strcmp(uri, uri_last))
 		history_add(uri);
 	uri_last = uri;
+
+	title = ecalloc(10 + strlen(uri), sizeof(char));
+	strcpy(title, "Xupric <");
+	strcat(title, uri);
+	strcat(title, ">");
+	gtk_window_set_title(GTK_WINDOW(current_frame_get()->win), title);
+	efree(title);
 }
 
 static void uri_load_progress(WebKitWebView *v)
