@@ -34,6 +34,19 @@ static struct key keys[] = {
 	{AKEY, GDK_KEY_s, wrap_focus_entry, {0}},
 	{AKEY|SKEY, GDK_KEY_s, wrap_focus_secondary_entry, {0}},
 
+	{CKEY|SKEY|AKEY, GDK_KEY_a, wrap_uri_load, {.s = "https://amazon.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_d, wrap_uri_load, {.s = "https://discord.com/channels/@me"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_e, wrap_uri_load, {.s = "https://ebay.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_g, wrap_uri_load, {.s = "https://github.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_i, wrap_uri_load, {.s = "https://twitter.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_m, wrap_uri_load, {.s = "https://mail.zoho.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_n, wrap_uri_load, {.s = "https://netflix.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_o, wrap_uri_load, {.s = "https://odysee.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_r, wrap_uri_load, {.s = "https://reddit.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_t, wrap_uri_load, {.s = "https://trello.com"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_w, wrap_uri_load, {.s = "https://wikipedia.org"}},
+	{CKEY|SKEY|AKEY, GDK_KEY_y, wrap_uri_load, {.s = "https://youtube.com"}},
+
 	{AKEY, GDK_KEY_Left, wrap_navigate, {1}},
 	{AKEY, GDK_KEY_Right, wrap_navigate, {0}},
 

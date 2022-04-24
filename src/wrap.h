@@ -7,6 +7,7 @@ union arg {
 	int i;
 	float f;
 	const void *p;
+	char *s;
 };
 
 static inline void wrap_view_show(union arg *arg)
@@ -101,4 +102,9 @@ static inline void wrap_focus_entry(union arg *)
 static inline void wrap_focus_secondary_entry(union arg *)
 {
 	clear_focus_secondary_entry();
+}
+
+static inline void wrap_uri_load(union arg *arg)
+{
+	uri_custom_load(current_frame_get(), arg->s, 0);
 }
