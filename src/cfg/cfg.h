@@ -13,6 +13,7 @@ typedef enum {
 	conf_webgl, conf_site_quirks,
 	conf_smooth_scrolling, conf_user_agent,
 	conf_hardware_accel, conf_cookie_policy,
+	conf_cookie_autofilter, conf_cookie_filter,
 	conf_itp, conf_tls_error_policy,
 	conf_search_engine, conf_secondary_search_engine,
 	conf_dark_mode, conf_ddg_dark,
@@ -24,10 +25,12 @@ typedef union {
 	int i;
 	float f;
 	char *s;
+	char **p;
 } conf_opt;
 
 conf_opt *cfg_get(void);
 conf_opt *cfg_load(char *name);
+int cfg_filter_len_get(void);
 void cfg_cleanup(void);
 
 #endif /* _CFG_CFG_H */

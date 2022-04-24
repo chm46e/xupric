@@ -58,6 +58,7 @@ static inline void gwrap_history_remove_all(GtkWidget *)
 	history_remove_all();
 }
 
+
 static inline void gwrap_cookie_remove(GtkWidget *w, struct cookie *c)
 {
 	GtkWidget *box;
@@ -66,6 +67,11 @@ static inline void gwrap_cookie_remove(GtkWidget *w, struct cookie *c)
 
 	box = gtk_widget_get_parent(w);
 	gtk_widget_destroy(box);
+}
+
+static inline void gwrap_cookie_remove_with_filter(GtkWidget *)
+{
+	cookie_remove_with_filter();
 }
 
 static inline void gwrap_cookie_remove_all(GtkWidget *)

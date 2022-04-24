@@ -9,6 +9,7 @@ struct cookie {
 
 void cookie_init(char *file);
 void cookie_remove(struct cookie *c);
+void cookie_remove_with_filter(void);
 void cookie_remove_all(void);
 struct cookie *cookie_get(void);
 struct cookie *cookie_p_get(void);

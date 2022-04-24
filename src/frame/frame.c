@@ -104,6 +104,8 @@ static void frame_signals_connect(void)
 		G_CALLBACK(gwrap_history_remove_all), NULL);
 	g_signal_connect(gtk_builder_get_object(builder, "menu_cookies_button"), "clicked",
 		G_CALLBACK(win_cookie_build), NULL);
+	g_signal_connect(gtk_builder_get_object(builder, "cookies_filter_button"), "clicked",
+		G_CALLBACK(gwrap_cookie_remove_with_filter), NULL);
 	g_signal_connect(gtk_builder_get_object(builder, "cookies_all_button"), "clicked",
 		G_CALLBACK(gwrap_cookie_remove_all), NULL);
 }

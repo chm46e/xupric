@@ -1,4 +1,5 @@
 #include <sqlite3.h>
+#include <gtk/gtk.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
@@ -18,9 +19,13 @@ void cookie_init(char *file)
 	if (sqlite3_open(file, &db))
 		die(1, "[ERROR] Unable to open the cookies database\n");
 
+
 	config = cfg_get();
 	if (config[conf_ddg_dark].i)
 		cookie_ddg_dark_theme_set();
+	if (config[conf_cookie_autofilter].i) {
+		cookie_remove_with_filter();
+	}
 }
 
 void cookie_remove(struct cookie *c)
@@ -42,6 +47,42 @@ void cookie_remove(struct cookie *c)
 		printf("Failed to remove cookie: %s\n", err);
 
 	efree(sql);
+}
+
+void cookie_remove_with_filter(void)
+{
+	conf_opt *config;
+	struct cookie *cookies;
+	char *sql;
+	int i, j, flen, change;
+
+	config = cfg_get();
+	cookies = cookie_get();
+
+	sql = ecalloc(36 + 10 * cookies_len, sizeof(char));
+	strcpy(sql, "DELETE FROM moz_cookies WHERE id=");
+	flen = cfg_filter_len_get();
+	change = 0;
+
+	for (i = 0; i < cookies_len; i++) {
+		for (j = 0; j < flen; j++) {
+			if (!(strcmp(cookies[i].host, config[conf_cookie_filter].p[j]))) {
+				goto next_cookie;
+			}
+		}
+		if (change)
+			strcat(sql, " OR id=");
+		strcat(sql, g_strdup_printf("%i", cookies[i].id));
+		change = 1;
+
+next_cookie:
+	}
+
+	if (change == 0)
+		return;
+
+	strcat(sql, ";");
+	sqlite3_exec(db, sql, NULL, NULL, NULL);
 }
 
 void cookie_remove_all(void)

@@ -5,6 +5,7 @@
 #include "cfg.h"
 
 static conf_opt *config;
+static int filter_len;
 
 conf_opt *cfg_get(void)
 {
@@ -14,6 +15,7 @@ conf_opt *cfg_get(void)
 conf_opt *cfg_load(char *name)
 {
 	cfg_t *cfg;
+	int len, i;
 
 	config = ecalloc(conf_len, sizeof(conf_opt));
 
@@ -39,6 +41,8 @@ conf_opt *cfg_load(char *name)
 		CFG_STR("user_agent", "", CFGF_NONE),
 		CFG_INT("hardware_accel", 2, CFGF_NONE),
 		CFG_INT("cookie_policy", 2, CFGF_NONE),
+		CFG_BOOL("cookie_autofilter", cfg_true, CFGF_NONE),
+		CFG_STR_LIST("cookie_filter", "{\"start.duckduckgo.com\"}", CFGF_NONE),
 		CFG_BOOL("itp", cfg_true, CFGF_NONE),
 		CFG_BOOL("tls_error_policy", cfg_true, CFGF_NONE),
 		CFG_STR("search_engine", "duckduckgo", CFGF_NONE),
@@ -75,6 +79,7 @@ conf_opt *cfg_load(char *name)
 	config[conf_user_agent].s = strdup(cfg_getstr(cfg, "user_agent"));
 	config[conf_hardware_accel].i = cfg_getint(cfg, "hardware_accel");
 	config[conf_cookie_policy].i = cfg_getint(cfg, "cookie_policy");
+	config[conf_cookie_autofilter].i = cfg_getbool(cfg, "cookie_autofilter");
 	config[conf_itp].i = cfg_getbool(cfg, "itp");
 	config[conf_tls_error_policy].i = cfg_getbool(cfg, "tls_error_policy");
 	config[conf_search_engine].s = strdup(cfg_getstr(cfg, "search_engine"));
@@ -84,18 +89,34 @@ conf_opt *cfg_load(char *name)
 	config[conf_scrollbar].i = cfg_getbool(cfg, "scrollbar");
 	config[conf_debug].i = cfg_getbool(cfg, "debug");
 
+	len = cfg_size(cfg, "cookie_filter");
+	config[conf_cookie_filter].p = ecalloc(len, sizeof(*config[conf_cookie_filter].p));
+	for (i = 0; i < len; i++)
+		config[conf_cookie_filter].p[i] = strdup(cfg_getnstr(cfg, "cookie_filter", i));
+	filter_len = i;
+
 	cfg_free(cfg);
 
 	return config;
 }
 
+int cfg_filter_len_get(void)
+{
+	return filter_len;
+}
+
 void cfg_cleanup(void)
 {
+	int i;
+
 	efree(config[conf_cache_prefix].s);
 	efree(config[conf_font_family].s);
 	efree(config[conf_charset].s);
 	efree(config[conf_user_agent].s);
 	efree(config[conf_search_engine].s);
 	efree(config[conf_secondary_search_engine].s);
+	for (i = 0; i < filter_len; i++)
+		efree(config[conf_cookie_filter].p[i]);
+	efree(config[conf_cookie_filter].p);
 	efree(config);
 }
