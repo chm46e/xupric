@@ -31,6 +31,8 @@ static struct key keys[] = {
 	{CKEY, GDK_KEY_d, wrap_dark_mode_toggle, {0}},
 	{CKEY|SKEY, GDK_KEY_d, wrap_debug_toggle, {0}},
 	{CKEY, GDK_KEY_s, wrap_download_page, {0}},
+	{AKEY, GDK_KEY_s, wrap_focus_entry, {0}},
+	{AKEY|SKEY, GDK_KEY_s, wrap_focus_secondary_entry, {0}},
 
 	{AKEY, GDK_KEY_Left, wrap_navigate, {1}},
 	{AKEY, GDK_KEY_Right, wrap_navigate, {0}},

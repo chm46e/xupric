@@ -1,5 +1,5 @@
-#ifndef _FRAME_HANDLE_H
-#define _FRAME_HANDLE_H
+#ifndef _FUN_FUN_H
+#define _FUN_FUN_H
 
 #include "frame/frame.h"
 
@@ -9,5 +9,7 @@ void view_navigate(struct frame *f, int back);
 void window_close(void);
 void debug_toggle(void);
 void download_current_page(void);
+void clear_focus_entry(void);
+void clear_focus_secondary_entry(void);
 
-#endif /* _FRAME_HANDLE_H */
+#endif /* _FUN_FUN_H */

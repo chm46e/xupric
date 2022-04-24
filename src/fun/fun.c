@@ -58,3 +58,21 @@ void download_current_page(void)
 	f = current_frame_get();
 	webkit_web_view_download_uri(f->view, uri_get(f));
 }
+
+void clear_focus_entry(void)
+{
+	GtkWidget *entry;
+
+	entry = GTK_WIDGET(gtk_builder_get_object(builder_get(), "bar_uri_entry"));
+	gtk_entry_set_text(GTK_ENTRY(entry), "");
+	gtk_widget_grab_focus(entry);
+}
+
+void clear_focus_secondary_entry(void)
+{
+	GtkWidget *entry;
+
+	entry = GTK_WIDGET(gtk_builder_get_object(builder_get(), "bar_uri_entry_secondary"));
+	gtk_entry_set_text(GTK_ENTRY(entry), "");
+	gtk_widget_grab_focus(entry);
+}

@@ -57,6 +57,8 @@ NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 | ctrl+d         | dark mode toggle |
 | ctrl+shift+d   | debug toggle     |
 | ctrl+s         | download page    |
+| alt+s          | uri entry focus  |
+| alt+shift+s    | uri secondary entry focus|
 | Esc            | stop loading & finish find|
 | F11            | fullscreen toggle|
 | alt+h          | goto home/start  |

@@ -92,3 +92,13 @@ static inline void wrap_download_page(union arg *)
 {
 	download_current_page();
 }
+
+static inline void wrap_focus_entry(union arg *)
+{
+	clear_focus_entry();
+}
+
+static inline void wrap_focus_secondary_entry(union arg *)
+{
+	clear_focus_secondary_entry();
+}
