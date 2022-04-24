@@ -59,7 +59,7 @@ void cookie_remove_with_filter(void)
 	config = cfg_get();
 	cookies = cookie_get();
 
-	sql = ecalloc(36 + 10 * cookies_len, sizeof(char));
+	sql = ecalloc(50 + 15 * cookies_len, sizeof(char));
 	strcpy(sql, "DELETE FROM moz_cookies WHERE id=");
 	flen = cfg_filter_len_get();
 	change = 0;
