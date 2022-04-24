@@ -303,9 +303,9 @@ static void uri_changed(WebKitWebView *)
 		history_add(uri);
 	uri_last = uri;
 
-	title = ecalloc(10 + strlen(uri), sizeof(char));
+	title = ecalloc(60, sizeof(char));
 	strcpy(title, "Xupric <");
-	strcat(title, uri);
+	strncat(title, uri, 50);
 	strcat(title, ">");
 	gtk_window_set_title(GTK_WINDOW(current_frame_get()->win), title);
 	efree(title);
