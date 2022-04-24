@@ -45,6 +45,10 @@ conf_opt *cfg_load(char *name)
 		CFG_STR_LIST("cookie_filter", "{\"start.duckduckgo.com\"}", CFGF_NONE),
 		CFG_BOOL("itp", cfg_true, CFGF_NONE),
 		CFG_BOOL("tls_error_policy", cfg_true, CFGF_NONE),
+		CFG_INT("permission_geolocation", 2, CFGF_NONE),
+		CFG_INT("permission_notification", 2, CFGF_NONE),
+		CFG_INT("permission_microphone", 2, CFGF_NONE),
+		CFG_INT("permission_camera", 2, CFGF_NONE),
 		CFG_STR("search_engine", "duckduckgo", CFGF_NONE),
 		CFG_STR("secondary_search_engine", "searx", CFGF_NONE),
 		CFG_BOOL("dark_mode", cfg_true, CFGF_NONE),
@@ -82,6 +86,10 @@ conf_opt *cfg_load(char *name)
 	config[conf_cookie_autofilter].i = cfg_getbool(cfg, "cookie_autofilter");
 	config[conf_itp].i = cfg_getbool(cfg, "itp");
 	config[conf_tls_error_policy].i = cfg_getbool(cfg, "tls_error_policy");
+	config[conf_permission_geolocation].i = cfg_getint(cfg, "permission_geolocation");
+	config[conf_permission_notification].i = cfg_getint(cfg, "permission_notification");
+	config[conf_permission_microphone].i = cfg_getint(cfg, "permission_microphone");
+	config[conf_permission_camera].i = cfg_getint(cfg, "permission_camera");
 	config[conf_search_engine].s = strdup(cfg_getstr(cfg, "search_engine"));
 	config[conf_secondary_search_engine].s = strdup(cfg_getstr(cfg, "secondary_search_engine"));
 	config[conf_dark_mode].i = cfg_getbool(cfg, "dark_mode");

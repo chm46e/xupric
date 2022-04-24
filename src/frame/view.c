@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
+#include <string.h>
 
 #include "fun/sql/bookmark.h"
 #include "fun/sql/history.h"
@@ -16,6 +17,7 @@
 static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na);
 static void uri_changed(WebKitWebView *);
 static void uri_load_progress(WebKitWebView *v);
+static int permission_request(WebKitWebView *, WebKitPermissionRequest *r, GtkWindow *p);
 
 static WebKitWebView **views;
 static int last = 0;
@@ -241,6 +243,8 @@ void view_list_create(void)
 		if (config[conf_scrollbar].i)
 			style_file_set(views[i], config_names[5]);
 
+		g_signal_connect(G_OBJECT(views[i]), "permission-request",
+			G_CALLBACK(permission_request), current_frame_get()->win);
 		g_signal_connect(G_OBJECT(views[i]), "load-changed",
 			G_CALLBACK(uri_changed), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "notify::estimated-load-progress",
@@ -309,6 +313,101 @@ static void uri_load_progress(WebKitWebView *v)
 	else
 		c = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_ARROW);
 	gdk_window_set_cursor(gtk_widget_get_window(current_frame_get()->win), c);
+}
+
+static int permission_request(WebKitWebView *, WebKitPermissionRequest *r, GtkWindow *p)
+{
+	GtkWidget *dialog;
+	conf_opt *config;
+	char *type, *question;
+	int ret;
+
+	config = cfg_get();
+	if (WEBKIT_IS_DEVICE_INFO_PERMISSION_REQUEST(r)) {
+		webkit_permission_request_allow(r);
+		return 1;
+	} else if (WEBKIT_IS_GEOLOCATION_PERMISSION_REQUEST(r)) {
+		if (config[conf_permission_geolocation].i == 1) {
+			webkit_permission_request_allow(r);
+			return 1;
+		} else if (config[conf_permission_geolocation].i == 0) {
+			webkit_permission_request_deny(r);
+			return 1;
+		}
+		type = "geolocation";
+	} else if (WEBKIT_IS_INSTALL_MISSING_MEDIA_PLUGINS_PERMISSION_REQUEST(r)) {
+		webkit_permission_request_allow(r);
+		return 1;
+	} else if (WEBKIT_IS_MEDIA_KEY_SYSTEM_PERMISSION_REQUEST(r)) {
+		webkit_permission_request_deny(r);
+		return 1;
+	} else if (WEBKIT_IS_NOTIFICATION_PERMISSION_REQUEST(r)) {
+		if (config[conf_permission_notification].i == 1) {
+			webkit_permission_request_allow(r);
+			return 1;
+		} else if (config[conf_permission_notification].i == 0) {
+			webkit_permission_request_deny(r);
+			return 1;
+		}
+		type = "notification";
+	} else if (WEBKIT_IS_POINTER_LOCK_PERMISSION_REQUEST(r)) {
+		webkit_permission_request_deny(r);
+		return 1;
+	} else if (WEBKIT_IS_USER_MEDIA_PERMISSION_REQUEST(r)) {
+		if (webkit_user_media_permission_is_for_audio_device(
+			WEBKIT_USER_MEDIA_PERMISSION_REQUEST(r))) {
+			if (config[conf_permission_microphone].i == 1) {
+				webkit_permission_request_allow(r);
+				return 1;
+			} else if (config[conf_permission_microphone].i == 0) {
+				webkit_permission_request_deny(r);
+				return 1;
+			}
+			type = "microphone";
+		} else if (webkit_user_media_permission_is_for_video_device(
+			WEBKIT_USER_MEDIA_PERMISSION_REQUEST(r))) {
+			if (config[conf_permission_camera].i == 1) {
+				webkit_permission_request_allow(r);
+				return 1;
+			} else if (config[conf_permission_camera].i == 0) {
+				webkit_permission_request_deny(r);
+				return 1;
+			}
+			type = "camera";
+		} else {
+			type = "media";
+		}
+	} else if (WEBKIT_IS_WEBSITE_DATA_ACCESS_PERMISSION_REQUEST(r)) {
+		webkit_permission_request_deny(r);
+		return 1;
+	} else {
+		return 0;
+	}
+
+	question = ecalloc(30+strlen(uri_get(current_frame_get())), sizeof(char));
+	strcpy(question, "Allow ");
+	strcat(question, type);
+	strcat(question, " access?\n");
+	strcat(question, uri_get(current_frame_get()));
+
+	dialog = gtk_message_dialog_new(p, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
+		GTK_BUTTONS_YES_NO, question);
+
+	gtk_widget_show(dialog);
+	ret = gtk_dialog_run(GTK_DIALOG(dialog));
+
+	switch (ret) {
+	case GTK_RESPONSE_YES:
+		webkit_permission_request_allow(r);
+		break;
+	default:
+		webkit_permission_request_deny(r);
+		break;
+	}
+
+	gtk_widget_destroy(dialog);
+	efree(question);
+	return 1;
 }
 
 WebKitWebView **views_get(void)

@@ -15,6 +15,8 @@ typedef enum {
 	conf_hardware_accel, conf_cookie_policy,
 	conf_cookie_autofilter, conf_cookie_filter,
 	conf_itp, conf_tls_error_policy,
+	conf_permission_geolocation, conf_permission_notification,
+	conf_permission_microphone, conf_permission_camera,
 	conf_search_engine, conf_secondary_search_engine,
 	conf_dark_mode, conf_ddg_dark,
 	conf_scrollbar, conf_debug,
