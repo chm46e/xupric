@@ -2,6 +2,7 @@
 #include <webkit2/webkit2.h>
 #include <string.h>
 
+#include "fun/fun.h"
 #include "fun/sql/bookmark.h"
 #include "fun/sql/history.h"
 #include "frame/frame.h"
@@ -262,6 +263,8 @@ void view_list_create(void)
 			G_CALLBACK(uri_load_progress), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "create",
 			G_CALLBACK(uri_blank_handle), NULL);
+		g_signal_connect(G_OBJECT(views[i]), "close",
+			G_CALLBACK(window_close), NULL);
 	}
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
