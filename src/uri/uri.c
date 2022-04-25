@@ -122,7 +122,6 @@ void uri_custom_load(struct frame *f, char *uri, int secondary)
 		uri_reload(f, 0);
 	} else {
 		webkit_web_view_load_uri(f->view, url);
-		//updatetitle;
 	}
 
 	g_free(url);
