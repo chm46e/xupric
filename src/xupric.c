@@ -76,8 +76,8 @@ static void cleanup(void)
 	uri_cleanup();
 	config_cache_cleanup();
 	cfg_cleanup();
+	frame_cleanup();
 
-	efree(frames_get());
 	xdisplay_close();
 }
 

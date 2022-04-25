@@ -211,3 +211,9 @@ GtkBuilder *builder_get(void)
 {
 	return builder;
 }
+
+void frame_cleanup(void)
+{
+	g_object_unref(G_OBJECT(builder));
+	efree(frames);
+}

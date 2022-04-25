@@ -48,7 +48,7 @@ void config_cache_create(void)
 	for (int i = 0; i < (int)LENGTH(config_names); i++) {
 		config_names[i] = g_build_filename(config_path, config_names[i], NULL);
 		if (config_names[i][strlen(config_names[i])-1] == '/') {
-			path_create(config_names[i]);
+			efree(path_create(config_names[i]));
 		} else {
 			file_create(config_names[i]);
 		}
@@ -61,7 +61,7 @@ void config_cache_create(void)
 		cache_names[i] = g_build_filename(config[conf_cache_prefix].s,
 			 cache_names[i], NULL);
 		if (cache_names[i][strlen(cache_names[i])-1] == '/')
-			path_create(cache_names[i]);
+			efree(path_create(cache_names[i]));
 		else
 			file_create(cache_names[i]);
 	}

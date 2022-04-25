@@ -55,7 +55,7 @@ char *path_create(char *path)
 	return rpath;
 }
 
-char *file_create(char *path)
+void file_create(char *path)
 {
 	char *dname, *bname, *bpath, *fpath;
 	FILE *file;
@@ -75,6 +75,5 @@ char *file_create(char *path)
 
 	chmod(fpath, 0600);
 	fclose(file);
-
-	return fpath;
+	g_free(fpath);
 }

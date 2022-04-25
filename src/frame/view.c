@@ -266,10 +266,8 @@ void view_list_create(void)
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
 
-	if (style_names_len > 0)
-		efree(css);
-	if (script_names_len > 0)
-		efree(script);
+	efree(css);
+	efree(script);
 }
 
 static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na)
@@ -440,5 +438,9 @@ int view_last_get(void)
 
 void view_cleanup(void)
 {
-	free(views);
+	int i;
+
+	for (i = 0; i < 10; i++)
+		g_object_ref_sink(views[i]);
+	efree(views);
 }

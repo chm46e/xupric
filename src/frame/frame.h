@@ -20,5 +20,6 @@ void dark_mode_button_toggle_handle(GtkWidget *);
 struct frame *frames_get(void);
 struct frame *current_frame_get(void);
 GtkBuilder *builder_get(void);
+void frame_cleanup(void);
 
 #endif /* _FRAME_FRAME_H */
