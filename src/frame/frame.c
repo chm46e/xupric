@@ -52,6 +52,7 @@ void frame_list_create(void)
 		frames[i].view = views_get()[i];
 		frames[i].win = win;
 		frames[i].empty = 1;
+		frames[i].fullscreen = 0;
 		frames[i].dark_mode = cfg_get()[conf_dark_mode].i;
 		frames[i].zoom = 1.0;
 		frames[i].finder = webkit_web_view_get_find_controller(frames[i].view);

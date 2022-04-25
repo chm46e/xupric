@@ -26,10 +26,24 @@ void zoom_action(struct frame *f, int action)
 
 void fullscreen_toggle(struct frame *f)
 {
-	if (f->fullscreen)
+	if (f->fullscreen) {
 		gtk_window_unfullscreen(GTK_WINDOW(f->win));
-	else
+		f->fullscreen = 0;
+	} else {
 		gtk_window_fullscreen(GTK_WINDOW(f->win));
+		f->fullscreen = 1;
+	}
+}
+
+void fullscreen_action(struct frame *f, int action)
+{
+	if (action == 0) {
+		gtk_window_unfullscreen(GTK_WINDOW(f->win));
+		f->fullscreen = 0;
+	} else {
+		gtk_window_fullscreen(GTK_WINDOW(f->win));
+		f->fullscreen = 1;
+	}
 }
 
 void view_navigate(struct frame *f, int back)

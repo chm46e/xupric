@@ -15,6 +15,7 @@
 #include "download.h"
 #include "view.h"
 
+static int webkit_fullscreen(WebKitWebView *, int action);
 static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na);
 static void uri_changed(WebKitWebView *);
 static void uri_load_progress(WebKitWebView *v);
@@ -265,12 +266,22 @@ void view_list_create(void)
 			G_CALLBACK(uri_blank_handle), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "close",
 			G_CALLBACK(window_close), NULL);
+		g_signal_connect(G_OBJECT(views[i]), "enter-fullscreen",
+			G_CALLBACK(webkit_fullscreen), (int *)1);
+		g_signal_connect(G_OBJECT(views[i]), "leave-fullscreen",
+			G_CALLBACK(webkit_fullscreen), (int *)0);
 	}
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
 
 	efree(css);
 	efree(script);
+}
+
+static int webkit_fullscreen(WebKitWebView *, int action)
+{
+	fullscreen_action(current_frame_get(), action);
+	return 1;
 }
 
 static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na)
