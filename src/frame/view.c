@@ -15,9 +15,13 @@
 #include "download.h"
 #include "view.h"
 
+#define CLEANMASK(mask) (mask & (GDK_CONTROL_MASK|GDK_SHIFT_MASK|GDK_SUPER_MASK|GDK_MOD1_MASK))
+
+static int button_release_event(GtkWidget *, GdkEvent *ev);
+static void mouse_target_changed(WebKitWebView *, WebKitHitTestResult *ht, guint);
 static void view_crashed(WebKitWebView *, WebKitWebProcessTerminationReason r);
 static int webkit_fullscreen(WebKitWebView *, int action);
-static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na);
+static void *view_navigation(WebKitWebView *, WebKitNavigationAction *na);
 static void uri_changed(WebKitWebView *);
 static void uri_load_progress(WebKitWebView *v);
 static int permission_request(WebKitWebView *, WebKitPermissionRequest *r, GtkWindow *p);
@@ -264,7 +268,7 @@ void view_list_create(void)
 		g_signal_connect(G_OBJECT(views[i]), "notify::estimated-load-progress",
 			G_CALLBACK(uri_load_progress), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "create",
-			G_CALLBACK(uri_blank_handle), NULL);
+			G_CALLBACK(view_navigation), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "close",
 			G_CALLBACK(window_close), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "enter-fullscreen",
@@ -273,12 +277,56 @@ void view_list_create(void)
 			G_CALLBACK(webkit_fullscreen), (int *)0);
 		g_signal_connect(G_OBJECT(views[i]), "web-process-terminated",
 			G_CALLBACK(view_crashed), NULL);
+		g_signal_connect(G_OBJECT(views[i]), "mouse-target-changed",
+			G_CALLBACK(mouse_target_changed), NULL);
+		g_signal_connect(G_OBJECT(views[i]), "button-release-event",
+			G_CALLBACK(button_release_event), NULL);
 	}
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
 
 	efree(css);
 	efree(script);
+}
+
+static int button_release_event(GtkWidget *, GdkEvent *ev)
+{
+	WebKitHitTestResultContext htc;
+	struct frame *f;
+
+	f = current_frame_get();
+	if (f->ht == NULL)
+		return 0;
+	htc = webkit_hit_test_result_get_context(f->ht);
+
+
+	if ((htc & WEBKIT_HIT_TEST_RESULT_CONTEXT_LINK ||
+		htc & WEBKIT_HIT_TEST_RESULT_CONTEXT_IMAGE ||
+		htc & WEBKIT_HIT_TEST_RESULT_CONTEXT_MEDIA) && ev->button.button == 2 &&
+		CLEANMASK(ev->button.state) == 0) {
+		new_window_spawn(f->onuri);
+		return 1;
+	}
+	return 0;
+}
+
+static void mouse_target_changed(WebKitWebView *, WebKitHitTestResult *ht, guint)
+{
+	WebKitHitTestResultContext htc;
+	struct frame *f;
+
+	f = current_frame_get();
+	htc = webkit_hit_test_result_get_context(ht);
+	f->ht = ht;
+
+	if (htc & WEBKIT_HIT_TEST_RESULT_CONTEXT_LINK)
+		f->onuri = (char *)webkit_hit_test_result_get_link_uri(ht);
+	else if (htc & WEBKIT_HIT_TEST_RESULT_CONTEXT_IMAGE)
+		f->onuri = (char *)webkit_hit_test_result_get_image_uri(ht);
+	else if (htc & WEBKIT_HIT_TEST_RESULT_CONTEXT_MEDIA)
+		f->onuri = (char *)webkit_hit_test_result_get_media_uri(ht);
+	else
+		f->onuri = NULL;
 }
 
 static void view_crashed(WebKitWebView *, WebKitWebProcessTerminationReason r)
@@ -302,11 +350,30 @@ static int webkit_fullscreen(WebKitWebView *, int action)
 	return 1;
 }
 
-static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na)
+static void *view_navigation(WebKitWebView *, WebKitNavigationAction *na)
 {
+	switch (webkit_navigation_action_get_navigation_type(na)) {
+	case WEBKIT_NAVIGATION_TYPE_OTHER:
+		if (webkit_navigation_action_is_user_gesture(na))
+			goto same_frame;
+		goto new_window;
+	case WEBKIT_NAVIGATION_TYPE_LINK_CLICKED:
+	case WEBKIT_NAVIGATION_TYPE_FORM_SUBMITTED:
+	case WEBKIT_NAVIGATION_TYPE_BACK_FORWARD:
+	case WEBKIT_NAVIGATION_TYPE_RELOAD:
+	case WEBKIT_NAVIGATION_TYPE_FORM_RESUBMITTED:
+	default:
+		goto same_frame;
+	}
+
+new_window:
+	new_window_spawn((char *)webkit_uri_request_get_uri(
+		webkit_navigation_action_get_request(na)));
+	return NULL;
+
+same_frame:
 	uri_custom_load(current_frame_get(), (char *)webkit_uri_request_get_uri(
 		webkit_navigation_action_get_request(na)), 0);
-
 	return NULL;
 }
 

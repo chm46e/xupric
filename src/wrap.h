@@ -117,5 +117,5 @@ static inline void wrap_workspace_load(union arg *arg)
 
 static inline void wrap_new_window_spawn(union arg *)
 {
-	new_window_spawn();
+	new_window_spawn(NULL);
 }

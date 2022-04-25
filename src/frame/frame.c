@@ -53,6 +53,8 @@ void frame_list_create(void)
 		frames[i].win = win;
 		frames[i].empty = 1;
 		frames[i].fullscreen = 0;
+		frames[i].onuri = NULL;
+		frames[i].ht = NULL;
 		frames[i].dark_mode = cfg_get()[conf_dark_mode].i;
 		frames[i].zoom = 1.0;
 		frames[i].finder = webkit_web_view_get_find_controller(frames[i].view);
@@ -131,9 +133,11 @@ static void bar_uri_enter_handle(GtkWidget *b)
 
 static int window_event_handle(GtkWidget *, GdkEvent *ev)
 {
+	int i;
+
 	switch (ev->type) {
 	case GDK_KEY_PRESS:
-		for (int i = 0; i < (int)LENGTH(keys); i++) {
+		for (i = 0; i < (int)LENGTH(keys); i++) {
 			if (gdk_keyval_to_lower(ev->key.keyval) == keys[i].keyval &&
 				CLEANMASK(ev->key.state) == keys[i].mod &&
 				keys[i].func) {

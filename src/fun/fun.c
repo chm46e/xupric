@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#include "util/util.h"
 #include "cfg/cfg.h"
 #include "frame/frame.h"
 #include "uri/uri.h"
@@ -130,13 +131,18 @@ void workspace_load(int c)
 	}
 }
 
-void new_window_spawn(void)
+void new_window_spawn(char *uri)
 {
-	char *const cmd[] = {"/bin/sh", "-c", "xupric", NULL};
+	char *bin;
+
+	bin = g_strdup_printf("xupric %s", uri);
+	char *const cmd[] = {"/bin/sh", "-c", bin, NULL};
 
 	if (fork() == 0) {
 		setsid();
 		execvp(cmd[0], cmd);
 		exit(0);
 	}
+
+	efree(bin);
 }
