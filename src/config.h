@@ -34,6 +34,7 @@ static struct key keys[] = {
 	{CKEY, GDK_KEY_s, wrap_download_page, {0}},
 	{AKEY, GDK_KEY_s, wrap_focus_entry, {0}},
 	{AKEY|SKEY, GDK_KEY_s, wrap_focus_secondary_entry, {0}},
+	{AKEY, GDK_KEY_w, wrap_new_window_spawn, {0}},
 
 	{CKEY|SKEY|AKEY, GDK_KEY_a, wrap_uri_load, {.s = "https://amazon.com"}},
 	{CKEY|SKEY|AKEY, GDK_KEY_d, wrap_uri_load, {.s = "https://discord.com/channels/@me"}},

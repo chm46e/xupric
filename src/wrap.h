@@ -114,3 +114,8 @@ static inline void wrap_workspace_load(union arg *arg)
 {
 	workspace_load(arg->i);
 }
+
+static inline void wrap_new_window_spawn(union arg *)
+{
+	new_window_spawn();
+}

@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
+#include <unistd.h>
 #include <stdio.h>
 
 #include "cfg/cfg.h"
@@ -126,5 +127,16 @@ void workspace_load(int c)
 			view_show(startf);
 		}
 		uri_custom_load(&fs[i], config[ws].p[i], 0);
+	}
+}
+
+void new_window_spawn(void)
+{
+	char *const cmd[] = {"/bin/sh", "-c", "xupric", NULL};
+
+	if (fork() == 0) {
+		setsid();
+		execvp(cmd[0], cmd);
+		exit(0);
 	}
 }

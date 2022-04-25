@@ -59,6 +59,7 @@ NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 | ctrl+s         | download page    |
 | alt+s          | uri entry focus  |
 | alt+shift+s    | uri secondary entry focus|
+| alt+w          | open new window  |
 | Esc            | stop (uri,find,fullscreen)|
 | F11            | fullscreen toggle|
 | alt+f          | fullscreen toggle|
