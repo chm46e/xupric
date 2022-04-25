@@ -12,5 +12,6 @@ void debug_toggle(void);
 void download_current_page(void);
 void clear_focus_entry(void);
 void clear_focus_secondary_entry(void);
+void workspace_load(int c);
 
 #endif /* _FUN_FUN_H */

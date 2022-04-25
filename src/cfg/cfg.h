@@ -20,6 +20,9 @@ typedef enum {
 	conf_search_engine, conf_secondary_search_engine,
 	conf_dark_mode, conf_ddg_dark,
 	conf_scrollbar, conf_debug,
+	conf_workspace_1, conf_workspace_2,
+	conf_workspace_3, conf_workspace_4,
+	conf_workspace_5,
 	conf_len
 } conf_opt_name;
 
@@ -33,6 +36,7 @@ typedef union {
 conf_opt *cfg_get(void);
 conf_opt *cfg_load(char *name);
 int cfg_filter_len_get(void);
+int *cfg_workspace_len_get(void);
 void cfg_cleanup(void);
 
 #endif /* _CFG_CFG_H */

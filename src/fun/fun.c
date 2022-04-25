@@ -5,6 +5,7 @@
 #include "cfg/cfg.h"
 #include "frame/frame.h"
 #include "uri/uri.h"
+#include "frame/view.h"
 
 void zoom_action(struct frame *f, int action)
 {
@@ -89,4 +90,41 @@ void clear_focus_secondary_entry(void)
 	entry = GTK_WIDGET(gtk_builder_get_object(builder_get(), "bar_uri_entry_secondary"));
 	gtk_entry_set_text(GTK_ENTRY(entry), "");
 	gtk_widget_grab_focus(entry);
+}
+
+void workspace_load(int c)
+{
+	conf_opt *config;
+	struct frame *fs;
+	int len, i, ws, startf;
+
+	config = cfg_get();
+	len = cfg_workspace_len_get()[c];
+	if (len == 0)
+		return;
+	if (len > 10)
+		len = 10;
+
+	if (c > 4)
+		return;
+
+	switch (c) {
+	case 0:
+		ws = conf_workspace_1;
+		break;
+	default:
+		ws = conf_workspace_1+c;
+		break;
+	}
+
+	startf = view_last_get();
+	fs = frames_get();
+	for (i = 0; i < len; i++) {
+		if (fs[i].empty) {
+			fs[i].empty = 0;
+			view_show(i);
+			view_show(startf);
+		}
+		uri_custom_load(&fs[i], config[ws].p[i], 0);
+	}
 }

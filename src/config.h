@@ -48,6 +48,12 @@ static struct key keys[] = {
 	{CKEY|SKEY|AKEY, GDK_KEY_w, wrap_uri_load, {.s = "https://wikipedia.org"}},
 	{CKEY|SKEY|AKEY, GDK_KEY_y, wrap_uri_load, {.s = "https://youtube.com"}},
 
+	{CKEY|SKEY|AKEY, GDK_KEY_exclam, wrap_workspace_load, {0}},
+	{CKEY|SKEY|AKEY, GDK_KEY_at, wrap_workspace_load, {1}},
+	{CKEY|SKEY|AKEY, GDK_KEY_numbersign, wrap_workspace_load, {2}},
+	{CKEY|SKEY|AKEY, GDK_KEY_dollar, wrap_workspace_load, {3}},
+	{CKEY|SKEY|AKEY, GDK_KEY_percent, wrap_workspace_load, {4}},
+
 	{AKEY, GDK_KEY_Left, wrap_navigate, {1}},
 	{AKEY, GDK_KEY_Right, wrap_navigate, {0}},
 

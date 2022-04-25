@@ -109,3 +109,8 @@ static inline void wrap_uri_load(union arg *arg)
 {
 	uri_custom_load(current_frame_get(), arg->s, 0);
 }
+
+static inline void wrap_workspace_load(union arg *arg)
+{
+	workspace_load(arg->i);
+}

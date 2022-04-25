@@ -70,7 +70,7 @@ NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 | ctrl+0         | zoom reset       |
 | ctrl+Tab       | next tab         |
 | ctrl+shift_Tab | previous tab     |
-| alt+\<x\>      | switch to tab x  |
+| alt+(1-0)      | switch to tab (1-0)|
 | C+S+A+a        | load amazon.com   |
 | C+S+A+d        | load discord.com  |
 | C+S+A+e        | load ebay.com     |
@@ -83,6 +83,7 @@ NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 | C+S+A+t        | load trello.com   |
 | C+S+A+w        | load wikipedia.org|
 | C+S+A+y        | load youtube.com  |
+| C+S+A+(1-5)    | switch to workspace (1-5)|
 
 Tab (10 max) switching is done with alt+(tab_number from 1->0)
 
