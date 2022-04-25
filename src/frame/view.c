@@ -89,7 +89,7 @@ void view_list_create(void)
     WebKitWebContext *context;
     WebKitCookieManager *cookiemanager;
     WebKitWebsiteDataManager *datamanager;
-	WebKitUserStyleSheet **css;
+	WebKitUserStyleSheet **css, *blast;
 	WebKitUserScript **script;
 	GTlsCertificate *cert;
 	conf_opt *config;
@@ -219,6 +219,14 @@ void view_list_create(void)
 		g_free(file);
 	}
 
+	/* loading screen color, so it's not gonna blast your eyes out with the white.
+	 * Also tweaks text color, so file viewer will be readable.
+	 */
+	blast = webkit_user_style_sheet_new(
+		"body {background-color: #1d1f21; color: #c5c8c6;}",
+		WEBKIT_USER_CONTENT_INJECT_ALL_FRAMES,
+		WEBKIT_USER_STYLE_LEVEL_USER, NULL, NULL);
+
 	for (i = 0; i < 10; i++) {
 		views[i] = g_object_new(WEBKIT_TYPE_WEB_VIEW,
 			"settings", settings,
@@ -237,6 +245,9 @@ void view_list_create(void)
 				webkit_web_view_get_user_content_manager(views[i]),
 				script[j]);
 		}
+
+		webkit_user_content_manager_add_style_sheet(
+			webkit_web_view_get_user_content_manager(views[i]), blast);
 
 		if (config[conf_dark_mode].i)
 			dark_mode_set(views[i]);
