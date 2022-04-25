@@ -15,6 +15,7 @@
 #include "download.h"
 #include "view.h"
 
+static void view_crashed(WebKitWebView *, WebKitWebProcessTerminationReason r);
 static int webkit_fullscreen(WebKitWebView *, int action);
 static void *uri_blank_handle(WebKitWebView *, WebKitNavigationAction *na);
 static void uri_changed(WebKitWebView *);
@@ -270,12 +271,29 @@ void view_list_create(void)
 			G_CALLBACK(webkit_fullscreen), (int *)1);
 		g_signal_connect(G_OBJECT(views[i]), "leave-fullscreen",
 			G_CALLBACK(webkit_fullscreen), (int *)0);
+		g_signal_connect(G_OBJECT(views[i]), "web-process-terminated",
+			G_CALLBACK(view_crashed), NULL);
 	}
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
 
 	efree(css);
 	efree(script);
+}
+
+static void view_crashed(WebKitWebView *, WebKitWebProcessTerminationReason r)
+{
+	switch (r) {
+	case WEBKIT_WEB_PROCESS_CRASHED:
+		die(1, "[ERROR] WebProcess crashed\n");
+		break;
+	case WEBKIT_WEB_PROCESS_EXCEEDED_MEMORY_LIMIT:
+		die(1, "[ERROR] WebProcess exceeded memory limit\n");
+		break;
+	default:
+		die(1, "[ERROR] WebProcess termination\n");
+		break;
+	}
 }
 
 static int webkit_fullscreen(WebKitWebView *, int action)
