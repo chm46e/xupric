@@ -17,8 +17,7 @@ void cookie_init(char *file)
 	conf_opt *config;
 
 	if (sqlite3_open(file, &db))
-		die(1, "[ERROR] Unable to open the cookies database\n");
-
+		debug(D_ERR, "cookie", "failed to open the cookies database: %s", file);
 
 	config = cfg_get();
 	if (config[conf_ddg_dark].i)
@@ -44,7 +43,7 @@ void cookie_remove(struct cookie *c)
 	sqlite3_exec(db, sql, NULL, NULL, &err);
 
 	if (err)
-		printf("Failed to remove cookie: %s\n", err);
+		debug(D_WARN, "cookie", "failed to remove cookie: %s", err);
 
 	efree(sql);
 }
@@ -102,7 +101,7 @@ struct cookie *cookie_get(void)
 
 	sql = "SELECT COUNT(*) AS count FROM moz_cookies;";
 	if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
-		die(1, "[ERROR] Unable to get cookies: %s\n", sqlite3_errmsg(db));
+		debug(D_ERR, "cookie", "failed to get cookies len: %s", sqlite3_errmsg(db));
 
 	sqlite3_step(stmt);
 	/* +1 so it won't try to alloc a 0 size buffer (error) */
@@ -111,7 +110,7 @@ struct cookie *cookie_get(void)
 
 	sql = "SELECT id, host, name FROM moz_cookies;";
 	if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
-		die(1, "[ERROR] Unable to get cookies: %s\n", sqlite3_errmsg(db));
+		debug(D_ERR, "cookie", "failed to get cookies: %s", sqlite3_errmsg(db));
 
 	for (i = 0; sqlite3_step(stmt) == SQLITE_ROW; i++) {
 		cookies[i].id = sqlite3_column_int(stmt, 0);

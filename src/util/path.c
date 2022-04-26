@@ -6,7 +6,6 @@
 #include <pwd.h>
 
 #include "util/util.h"
-
 #include "path.h"
 
 char *home_path_get(void)
@@ -17,7 +16,7 @@ char *home_path_get(void)
 		hdir = getpwuid(getuid())->pw_dir;
 
 	if (!(strcmp(hdir, "")))
-		die(1, "[ERROR] Unable to get user's home directory\n");
+		debug(D_ERR, "path", "failed to get the home path");
 
 	return hdir;
 }
@@ -30,7 +29,7 @@ char *home_path_expand(char *path)
 		return g_strdup(path);
 
 	if (!(path[1] == '/' || path[1] == '\0'))
-		die(1, "[ERROR] Invalid path: %s\n", path);
+		debug(D_ERR, "path", "invalid path: %s", path);
 
 	hdir = home_path_get();
 	return g_build_filename(hdir, (char *)&path[1], NULL);
@@ -46,7 +45,7 @@ char *path_create(char *path)
 		xpath = g_strdup(path);
 
 	if (g_mkdir_with_parents(xpath, 0700) < 0)
-		die(1, "[ERROR] Unable to access directory: %s\n", xpath);
+		debug(D_WARN, "path", "failed to create path: %s", xpath);
 
 	/* realpath: ~/../../../tmp/./ -> /tmp */
 	rpath = realpath(xpath, NULL);
@@ -71,9 +70,11 @@ void file_create(char *path)
 	g_free(bname);
 
 	if (!(file = fopen(fpath, "a")))
-		die(1, "[ERROR] Unable to open file: %s\n", fpath);
+		debug(D_WARN, "path", "failed to create file: %s", fpath);
 
-	chmod(fpath, 0600);
+	if (chmod(fpath, 0600) == -1)
+		debug(D_WARN, "path", "failed to change file mode to 0600: %s", fpath);
+
 	fclose(file);
 	g_free(fpath);
 }

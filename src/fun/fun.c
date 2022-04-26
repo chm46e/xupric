@@ -30,6 +30,7 @@ void zoom_label_update(struct frame *f)
 	sprintf(zoom, "%i%%", (int)(f->zoom*100));
 	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(
 		builder_get(), "menu_zoom_reset_label")), zoom);
+	debug(D_DEBUG, "update", "zoom %s", zoom);
 }
 
 void fullscreen_toggle(struct frame *f)
@@ -64,13 +65,21 @@ void view_navigate(struct frame *f, int back)
 
 void window_close(void)
 {
+	debug(D_DEBUG, "window", "signal :close:");
 	gtk_main_quit();
 }
 
 void debug_toggle(void)
 {
 	conf_opt *config = cfg_get();
-	config[conf_debug].i = !(config[conf_debug].i);
+
+	if (config[conf_debug].i) {
+		debug(D_DEBUG, "action", "debug 0 (off)");
+		config[conf_debug].i = !(config[conf_debug].i);
+	} else {
+		config[conf_debug].i = !(config[conf_debug].i);
+		debug(D_DEBUG, "action", "debug 1 (on)");
+	}
 }
 
 void download_current_page(void)

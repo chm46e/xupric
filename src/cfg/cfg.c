@@ -68,7 +68,7 @@ conf_opt *cfg_load(char *name)
 
 	cfg = cfg_init(opts, CFGF_NOCASE);
 	if(cfg_parse(cfg, name) == CFG_PARSE_ERROR)
-		die(1, "[ERROR] Unable to parse config: %s\n", name);
+		debug(D_ERR, "cfg", "failed to parse config: %s", name);
 
 	config[conf_cache_prefix].s = strdup(cfg_getstr(cfg, "cache_prefix"));
 	config[conf_ephemeral].i = cfg_getbool(cfg, "ephemeral");

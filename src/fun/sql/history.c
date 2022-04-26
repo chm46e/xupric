@@ -17,7 +17,7 @@ void history_init(char *file)
 	conf_opt *config;
 
 	if (sqlite3_open(file, &db))
-		die(1, "[ERROR] Unable to open the history database\n");
+		debug(D_ERR, "history", "failed to open the history database: %s", file);
 
 	sql = "CREATE TABLE history(id INTEGER NOT NULL UNIQUE" \
 		", uri TEXT NOT NULL, PRIMARY KEY (id AUTOINCREMENT));";
@@ -44,7 +44,7 @@ void history_add(char *text)
 	sqlite3_exec(db, sql, NULL, NULL, &err);
 
 	if (err)
-		printf("Failed to add history: %s\n", err);
+		debug(D_WARN, "history", "failed to add history: %s", err);
 
 	efree(sql);
 }
@@ -65,7 +65,7 @@ void history_remove(struct history *h)
 	sqlite3_exec(db, sql, NULL, NULL, &err);
 
 	if (err)
-		printf("Failed to remove history: %s\n", err);
+		debug(D_WARN, "history", "failed to remove history: %s", err);
 
 	efree(sql);
 }
@@ -87,7 +87,7 @@ struct history *history_get(void)
 
 	sql = "SELECT COUNT(*) AS count FROM history;";
 	if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
-		die(1, "[ERROR] Unable to get history: %s\n", sqlite3_errmsg(db));
+		debug(D_ERR, "history", "failed to get history len: %s", sqlite3_errmsg(db));
 
 	sqlite3_step(stmt);
 	/* +1 so it won't try to alloc a 0 size buffer (error) */
@@ -96,7 +96,7 @@ struct history *history_get(void)
 
 	sql = "SELECT * FROM history;";
 	if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
-		die(1, "[ERROR] Unable to get history: %s\n", sqlite3_errmsg(db));
+		debug(D_ERR, "history", "failed to get history: %s", sqlite3_errmsg(db));
 
 	for (i = 0; sqlite3_step(stmt) == SQLITE_ROW; i++) {
 		history[i].id = sqlite3_column_int(stmt, 0);

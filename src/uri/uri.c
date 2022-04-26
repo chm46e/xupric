@@ -53,7 +53,7 @@ static char *search_engine_get(char *opt)
 	else if (!(strcmp(opt, "yandex")))
 		return strdup("https://www.yandex.com/");
 	else
-		die(1, "[ERROR] Unknown search engine\n");
+		debug(D_WARN, "uri", "unknown search engine: %s", opt);
 
 	return strdup("https://start.duckduckgo.com/");
 }

@@ -67,7 +67,10 @@ void config_cache_create(void)
 	}
 
 	i = 0;
-	dir = g_dir_open(config_names[2], 0, NULL);
+	if ((dir = g_dir_open(config_names[2], 0, NULL)) == NULL) {
+		debug(D_WARN, "config", "failed to open custom style path: %s", config_names[2]);
+		debug(D_FOLD, "", "Custom styles - disabled");
+	}
 	while ((file = (char *)g_dir_read_name(dir)) != NULL) {
 		if (!(strcmp(file, "app")))
 			continue;
@@ -81,7 +84,10 @@ void config_cache_create(void)
 	g_dir_close(dir);
 
 	i = 0;
-	dir = g_dir_open(config_names[1], 0, NULL);
+	if ((dir = g_dir_open(config_names[1], 0, NULL)) == NULL) {
+		debug(D_WARN, "config", "failed to open custom script path: %s", script_names[1]);
+		debug(D_FOLD, "", "Custom scripts - disabled");
+	}
 	while ((file = (char *)g_dir_read_name(dir)) != NULL) {
 		script_names = erealloc(script_names, (i + 1)*sizeof(script_names));
 		script_names[i] = strdup(file);
@@ -92,7 +98,10 @@ void config_cache_create(void)
 	g_dir_close(dir);
 
 	i = 0;
-	dir = g_dir_open(config_names[3], 0, NULL);
+	if ((dir = g_dir_open(config_names[3], 0, NULL)) == NULL) {
+		debug(D_WARN, "config", "failed to open custom cert path: %s", script_names[3]);
+		debug(D_FOLD, "", "Custom certs - disabled");
+	}
 	while ((file = (char *)g_dir_read_name(dir)) != NULL) {
 		cert_names = erealloc(cert_names, (i + 1)*sizeof(cert_names));
 		cert_names[i] = strdup(file);
@@ -119,7 +128,10 @@ void config_cache_cleanup(void)
 		g_free(cert_names[i]);
 
 	g_free(config_path);
-	g_free(style_names);
-	g_free(script_names);
-	g_free(cert_names);
+	if (style_names_len != 0)
+		g_free(style_names);
+	if (script_names_len != 0)
+		g_free(script_names);
+	if (cert_names_len != 0)
+		g_free(cert_names);
 }

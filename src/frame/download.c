@@ -16,6 +16,8 @@ void download_started(WebKitWebContext *, WebKitDownload *d)
 {
 	builder = builder_get();
 
+	debug(D_DEBUG, "WebKitWebContext", "signal :download-started:");
+
 	g_signal_connect(G_OBJECT(d), "decide-destination",
 		G_CALLBACK(download_filename_choose), NULL);
 	g_signal_connect(G_OBJECT(d), "created-destination",
@@ -33,6 +35,8 @@ static int download_filename_choose(WebKitDownload *d, char *dest)
 	GtkWidget *chooser;
 	int ret;
 	char *uri;
+
+	debug(D_DEBUG, "WebKitDownload", "signal :decide-destination:");
 
 	chooser = gtk_file_chooser_dialog_new("Select Download Location",
 		GTK_WINDOW(current_frame_get()->win), GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -71,6 +75,8 @@ static void download_destination_created(WebKitDownload *, char *dest)
 {
 	char *name;
 
+	debug(D_DEBUG, "WebKitDownload", "signal :created-destination:");
+
 	name = ecalloc(21, sizeof(char));
 	strncpy(name, g_filename_display_basename(dest), 20);
 
@@ -84,6 +90,8 @@ static void download_progress_changed(WebKitDownload *d)
 {
 	char progress[6];
 
+	debug(D_DEBUG, "WebKitDownload", "signal :notify::estimated-progress:");
+
 	sprintf(progress, "%i%%:", (int)(webkit_download_get_estimated_progress(d)*100));
 
 	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder,
@@ -92,6 +100,8 @@ static void download_progress_changed(WebKitDownload *d)
 
 static void download_finished(WebKitDownload *)
 {
+	debug(D_DEBUG, "WebKitDownload", "signal :download-finished:");
+
 	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder,
 		"menu_download_progress_label")), "100%:");
 	download_last = 0;
@@ -99,6 +109,7 @@ static void download_finished(WebKitDownload *)
 
 void download_quit(GtkWidget *)
 {
+	debug(D_DEBUG, "action", "download quit");
 	if (download_last != 0) {
 		webkit_download_cancel(download_last);
 		gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(builder,

@@ -15,7 +15,7 @@ void bookmark_init(char *file)
 	char *sql;
 
 	if (sqlite3_open(file, &db))
-		die(1, "[ERROR] Unable to open the bookmarks database\n");
+		debug(D_ERR, "bookmark", "failed to open the bookmarks database: %s", file);
 
 	sql = "CREATE TABLE books(id INTEGER NOT NULL UNIQUE" \
 		", uri TEXT NOT NULL, PRIMARY KEY (id AUTOINCREMENT));";
@@ -38,7 +38,7 @@ void bookmark_add(char *text)
 	sqlite3_exec(db, sql, NULL, NULL, &err);
 
 	if (err)
-		printf("Failed to add bookmark: %s\n", err);
+		debug(D_WARN, "bookmark", "failed to add bookmark: %s", err);
 
 	efree(sql);
 }
@@ -59,7 +59,7 @@ void bookmark_remove(struct bookmark *b)
 	sqlite3_exec(db, sql, NULL, NULL, &err);
 
 	if (err)
-		printf("Failed to remove bookmark: %s\n", err);
+		debug(D_WARN, "bookmark", "failed to remove bookmark: %s", err);
 
 	efree(sql);
 }
@@ -78,7 +78,7 @@ void bookmark_remove_by_uri(char *uri)
 	sqlite3_exec(db, sql, NULL, NULL, &err);
 
 	if (err)
-		printf("Failed to remove bookmark: %s\n", err);
+		debug(D_WARN, "bookmark", "failed to remove bookmark: %s", err);
 
 	efree(sql);
 }
@@ -91,7 +91,7 @@ struct bookmark *bookmark_get(void)
 
 	sql = "SELECT COUNT(*) AS count FROM books;";
 	if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
-		die(1, "[ERROR] Unable to get bookmarks: %s\n", sqlite3_errmsg(db));
+		debug(D_ERR, "bookmark", "failed to get bookmarks len: %s", sqlite3_errmsg(db));
 
 	sqlite3_step(stmt);
 	/* +1 so it won't try to alloc a 0 size buffer (error) */
@@ -100,7 +100,7 @@ struct bookmark *bookmark_get(void)
 
 	sql = "SELECT * FROM books;";
 	if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
-		die(1, "[ERROR] Unable to get bookmarks: %s\n", sqlite3_errmsg(db));
+		debug(D_ERR, "bookmark", "failed to get bookmarks: %s", sqlite3_errmsg(db));
 
 	for (i = 0; sqlite3_step(stmt) == SQLITE_ROW; i++) {
 		books[i].id = sqlite3_column_int(stmt, 0);
@@ -135,7 +135,7 @@ int bookmark_exists(char *book)
 	strcat(sql, "\';");
 
 	if (sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL))
-		die(1, "[ERROR] Unable to get bookmarks: %s\n", sqlite3_errmsg(db));
+		debug(D_ERR, "bookmark", "failed to get bookmarks: %s", sqlite3_errmsg(db));
 
 	if (sqlite3_step(stmt) == SQLITE_ROW)
 		exists = 1;

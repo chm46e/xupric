@@ -37,23 +37,25 @@ static void sigchld()
 static void sighup()
 {
 	/* SIGHUP(1) -> controlling terminal closed */
+	debug(D_DEBUG, "signal", "controlling terminal closed");
 	window_close();
 }
 
 static void sigint()
 {
 	/* SIGINT(2) -> controlling terminal interrupt (usually ctrl+c) */
+	debug(D_DEBUG, "signal", "controlling terminal interrupt");
 	window_close();
 }
 
 static void setup(void)
 {
 	if (signal(SIGCHLD, sigchld) == SIG_ERR)
-		die(1, "[ERROR] Unable to install the SIGCHLD handler\n");
+		debug(D_WARN, "signal", "failed to install the SIGCHLD handler");
 	if (signal(SIGHUP, sighup) == SIG_ERR)
-		die(1, "[ERROR] Unable to install the SIGHUP handler\n");
+		debug(D_WARN, "signal", "failed to install the SIGHUP handler");
 	if (signal(SIGINT, sigint) == SIG_ERR)
-		die(1, "[ERROR] Unable to install the SIGINT handler\n");
+		debug(D_WARN, "signal", "failed to install the SIGINT handler");
 	sigchld();
 
 	xdisplay_create();
@@ -102,44 +104,60 @@ static void show_version_info(void)
 static int parameter_handle(int argc, char *argv[])
 {
 	int i;
+	int opt = 0;
 
 	if (argc >= 2) {
 		for (i = 1; i < argc; i++) {
 			if (argv[i][0] == '-') {
-				if (!(strcmp(argv[i], "-v")) || !(strcmp(argv[i], "--version"))) {
+				if (!(strcmp(argv[i], "-v")) ||
+					!(strcmp(argv[i], "--version"))) {
 					show_version_info();
 					return 0;
-				} else if (!(strcmp(argv[i], "-d")) || !(strcmp(argv[i], "--debug"))) {
-					cfg_get()[conf_debug].i = 1;
-				} else if (!(strcmp(argv[i], "-p")) || !(strcmp(argv[i], "--private"))) {
-					cfg_get()[conf_ephemeral].i = 1;
+				} else if (!(strcmp(argv[i], "-d")) ||
+					!(strcmp(argv[i], "--debug"))) {
+					opt |= 4;
+				} else if (!(strcmp(argv[i], "-p")) ||
+					!(strcmp(argv[i], "--private"))) {
+					opt |= 2;
 				} else {
 					show_help();
 					return 0;
 				}
 			} else {
 				uri = argv[i];
-				return 1;
+				opt |= 1;
 			}
 		}
 	}
-	return 1;
+	if (opt == 0)
+		return 8;
+	return opt;
 }
 
 int main(int argc, char *argv[])
 {
+	int opt;
+
+	opt  = parameter_handle(argc, argv);
+	if (opt == 0)
+		return 0;
+
 	setup();
-
-	if (parameter_handle(argc, argv)) {
-		uri_init();
-		frame_list_create();
-		view_show(0);
-
-		if (strcmp(uri, ""))
-			uri_custom_load(current_frame_get(), uri, 0);
-
-		gtk_main();
+	if (opt & 2)
+		cfg_get()[conf_ephemeral].i = 1;
+	if (opt & 4) {
+		cfg_get()[conf_debug].i = 1;
 	}
+
+	uri_init();
+	frame_list_create();
+	debug(D_DEBUG, "all done", "ready for deployment:D");
+	view_show(0);
+
+	if (strcmp(uri, "") && opt & 1)
+		uri_custom_load(current_frame_get(), uri, 0);
+
+	gtk_main();
 
 	cleanup();
 	return 0;
