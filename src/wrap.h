@@ -119,3 +119,8 @@ static inline void wrap_new_window_spawn(union arg *)
 {
 	new_window_spawn(NULL);
 }
+
+static inline void wrap_toggle_webinspector(union arg *)
+{
+	toggle_webinspector();
+}

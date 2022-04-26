@@ -15,5 +15,6 @@ void clear_focus_entry(void);
 void clear_focus_secondary_entry(void);
 void workspace_load(int c);
 void new_window_spawn(char *uri);
+void toggle_webinspector(void);
 
 #endif /* _FUN_FUN_H */

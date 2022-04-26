@@ -33,7 +33,7 @@ conf_opt *cfg_load(char *name)
 		CFG_STR("font_family", "sans-serif", CFGF_NONE),
 		CFG_INT("font_size", 16, CFGF_NONE),
 		CFG_STR("charset", "UTF_8", CFGF_NONE),
-		CFG_BOOL("developer_extras", cfg_false, CFGF_NONE),
+		CFG_BOOL("developer_extras", cfg_true, CFGF_NONE),
 		CFG_BOOL("dns_prefetching", cfg_false, CFGF_NONE),
 		CFG_BOOL("caret_browsing", cfg_false, CFGF_NONE),
 		CFG_BOOL("media", cfg_true, CFGF_NONE),

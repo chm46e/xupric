@@ -72,6 +72,7 @@ NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 | ctrl+Tab       | next tab         |
 | ctrl+shift_Tab | previous tab     |
 | alt+(1-0)      | switch to tab (1-0)|
+| ctrl+i         | toggle webinspector|
 | C+S+A+a        | load amazon.com   |
 | C+S+A+d        | load discord.com  |
 | C+S+A+e        | load ebay.com     |

@@ -11,7 +11,7 @@ struct frame {
 	WebKitFindController *finder;
 	Window winid;
 	WebKitHitTestResult *ht;
-	int empty, fullscreen, dark_mode;
+	int empty, fullscreen, dark_mode, inspector;
 	char *onuri;
 	float zoom;
 };

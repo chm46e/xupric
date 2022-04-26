@@ -17,6 +17,7 @@
 
 #define CLEANMASK(mask) (mask & (GDK_CONTROL_MASK|GDK_SHIFT_MASK|GDK_SUPER_MASK|GDK_MOD1_MASK))
 
+static int inspector_event(WebKitWebInspector *, int type);
 static int scroll_event(GtkWidget *, GdkEvent *ev);
 static int button_release_event(GtkWidget *, GdkEvent *ev);
 static void mouse_target_changed(WebKitWebView *, WebKitHitTestResult *ht, guint);
@@ -95,6 +96,7 @@ void view_list_create(void)
 {
     WebKitSettings *settings;
     WebKitWebContext *context;
+	WebKitWebInspector *inspector;
     WebKitCookieManager *cookiemanager;
     WebKitWebsiteDataManager *datamanager;
 	WebKitUserStyleSheet **css, *blast;
@@ -284,12 +286,39 @@ void view_list_create(void)
 			G_CALLBACK(button_release_event), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "scroll-event",
 			G_CALLBACK(scroll_event), NULL);
+
+		inspector = webkit_web_view_get_inspector(views[i]);
+		g_signal_connect(G_OBJECT(inspector), "bring-to-front",
+			G_CALLBACK(inspector_event), (int *)1);
+		g_signal_connect(G_OBJECT(inspector), "closed",
+			G_CALLBACK(inspector_event), (int *)0);
+		g_signal_connect(G_OBJECT(inspector), "open-window",
+			G_CALLBACK(inspector_event), (int *)2);
 	}
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
 
 	efree(css);
 	efree(script);
+}
+
+static int inspector_event(WebKitWebInspector *, int type)
+{
+	struct frame *f;
+
+	f = current_frame_get();
+	switch (type) {
+	case 1:
+		f->inspector = 1;
+		break;
+	case 2:
+	case 0:
+		f->inspector = 0;
+		break;
+	default:
+		break;
+	}
+	return 0;
 }
 
 static int scroll_event(GtkWidget *, GdkEvent *ev)

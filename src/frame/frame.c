@@ -57,6 +57,7 @@ void frame_list_create(void)
 		frames[i].ht = NULL;
 		frames[i].dark_mode = cfg_get()[conf_dark_mode].i;
 		frames[i].zoom = 1.0;
+		frames[i].inspector = 0;
 		frames[i].finder = webkit_web_view_get_find_controller(frames[i].view);
 	}
 

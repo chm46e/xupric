@@ -151,3 +151,20 @@ void new_window_spawn(char *uri)
 
 	efree(bin);
 }
+
+void toggle_webinspector(void)
+{
+	WebKitWebInspector *in;
+	struct frame *f;
+
+	f = current_frame_get();
+	in = webkit_web_view_get_inspector(f->view);
+
+	if (f->inspector) {
+		webkit_web_inspector_close(in);
+		f->inspector = 0;
+	} else if (!(f->inspector)) {
+		webkit_web_inspector_show(in);
+		f->inspector = 1;
+	}
+}
