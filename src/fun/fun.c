@@ -8,11 +8,10 @@
 #include "frame/frame.h"
 #include "uri/uri.h"
 #include "frame/view.h"
+#include "fun/fun.h"
 
 void zoom_action(struct frame *f, int action)
 {
-	char zoom[5];
-
 	if (action == 1)
 		webkit_web_view_set_zoom_level(f->view, f->zoom + 0.1);
 	else if (action == 0)
@@ -21,6 +20,12 @@ void zoom_action(struct frame *f, int action)
 		webkit_web_view_set_zoom_level(f->view, 1.0);
 
 	f->zoom = webkit_web_view_get_zoom_level(f->view);
+	zoom_label_update(f);
+}
+
+void zoom_label_update(struct frame *f)
+{
+	char zoom[5];
 
 	sprintf(zoom, "%i%%", (int)(f->zoom*100));
 	gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(

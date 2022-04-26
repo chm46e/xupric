@@ -17,6 +17,7 @@
 
 #define CLEANMASK(mask) (mask & (GDK_CONTROL_MASK|GDK_SHIFT_MASK|GDK_SUPER_MASK|GDK_MOD1_MASK))
 
+static int scroll_event(GtkWidget *, GdkEvent *ev);
 static int button_release_event(GtkWidget *, GdkEvent *ev);
 static void mouse_target_changed(WebKitWebView *, WebKitHitTestResult *ht, guint);
 static void view_crashed(WebKitWebView *, WebKitWebProcessTerminationReason r);
@@ -281,12 +282,47 @@ void view_list_create(void)
 			G_CALLBACK(mouse_target_changed), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "button-release-event",
 			G_CALLBACK(button_release_event), NULL);
+		g_signal_connect(G_OBJECT(views[i]), "scroll-event",
+			G_CALLBACK(scroll_event), NULL);
 	}
 	g_signal_connect(G_OBJECT(context), "download-started",
 		G_CALLBACK(download_started), NULL);
 
 	efree(css);
 	efree(script);
+}
+
+static int scroll_event(GtkWidget *, GdkEvent *ev)
+{
+	GdkScrollDirection d;
+	struct frame *f;
+	float x, y;
+
+	if (!gdk_event_get_scroll_deltas(ev, (double *)&x, (double *)&y)) {
+		return 0;
+	} else if (gdk_event_get_scroll_direction(ev, &d)) {
+		switch (d) {
+		case GDK_SCROLL_UP:
+			x = -2;
+			break;
+		case GDK_SCROLL_DOWN:
+			x = 2;
+			break;
+		case GDK_SCROLL_LEFT:
+		case GDK_SCROLL_RIGHT:
+		default:
+			break;
+		}
+	}
+
+	f = current_frame_get();
+	if (CLEANMASK(ev->scroll.state) == GDK_CONTROL_MASK) {
+		f->zoom -= x/70;
+		webkit_web_view_set_zoom_level(f->view, f->zoom);
+		zoom_label_update(f);
+		return 1;
+	}
+	return 0;
 }
 
 static int button_release_event(GtkWidget *, GdkEvent *ev)

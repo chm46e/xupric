@@ -4,6 +4,7 @@
 #include "frame/frame.h"
 
 void zoom_action(struct frame *f, int action);
+void zoom_label_update(struct frame *f);
 void fullscreen_toggle(struct frame *f);
 void fullscreen_action(struct frame *f, int action);
 void view_navigate(struct frame *f, int back);
