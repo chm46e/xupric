@@ -45,6 +45,7 @@ void frame_list_create(void)
 	g_signal_connect(win, "window-state-event", G_CALLBACK(window_event_handle), NULL);
 
 	gtk_window_maximize(GTK_WINDOW(win));
+	random_message();
 
 	view_list_create();
 

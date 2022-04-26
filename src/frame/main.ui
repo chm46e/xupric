@@ -673,12 +673,13 @@
         <child>
           <object class="GtkBox" id="menu_privacy_box">
             <property name="name">menu_privacy_box</property>
+            <property name="height_request">60</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="homogeneous">True</property>
             <child>
-              <object class="GtkLabel" id="menu_privacy_label">
-                <property name="name">menu_privacy_label</property>
+              <object class="GtkLabel" id="menu_note_label">
+                <property name="name">menu_note_label</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
@@ -686,9 +687,6 @@
                 <property name="margin_end">5</property>
                 <property name="margin_top">5</property>
                 <property name="margin_bottom">5</property>
-                <property name="label" translatable="yes">Shoot for the moon, 
-even if you fail, 
-you'll land among the stars.</property>
                 <property name="wrap">True</property>
                 <property name="wrap_mode">char</property>
               </object>

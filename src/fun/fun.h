@@ -16,5 +16,6 @@ void clear_focus_secondary_entry(void);
 void workspace_load(int c);
 void new_window_spawn(char *uri);
 void toggle_webinspector(void);
+void random_message(void);
 
 #endif /* _FUN_FUN_H */
