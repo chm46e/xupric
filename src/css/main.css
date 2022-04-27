@@ -19,6 +19,10 @@ label {
 	font-family: "JetBrainsMono Nerd Font", sans-serif;
 }
 
+colorchooser * {
+	all: initial;
+}
+
 #bar_uri_entry, #bar_uri_entry_secondary, entry {
 	background-color: @uri;
 	box-shadow: 0 0 1px @uri_hover;
