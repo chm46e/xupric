@@ -17,6 +17,15 @@
 
 #define CLEANMASK(mask) (mask & (GDK_CONTROL_MASK|GDK_SHIFT_MASK|GDK_SUPER_MASK|GDK_MOD1_MASK))
 
+static void resource_load_started(WebKitWebView *, WebKitWebResource *res,
+	WebKitURIRequest *);
+static void resource_load_failed(WebKitWebResource *, GError *err);
+static void resource_load_tls_failed(WebKitWebResource *, GTlsCertificate *,
+	GTlsCertificateFlags flags);
+static void resource_finished(WebKitWebResource *);
+static void resource_received_data(WebKitWebResource *res, guint64);
+static int context_menu(WebKitWebView *, WebKitContextMenu *,
+	GdkEvent *, WebKitHitTestResult *);
 static int inspector_event(WebKitWebInspector *, int type);
 static int scroll_event(GtkWidget *, GdkEvent *ev);
 static int button_release_event(GtkWidget *, GdkEvent *ev);
@@ -272,6 +281,8 @@ void view_list_create(void)
 			G_CALLBACK(permission_request), current_frame_get()->win);
 		g_signal_connect(G_OBJECT(views[i]), "load-changed",
 			G_CALLBACK(uri_changed), NULL);
+		g_signal_connect(G_OBJECT(views[i]), "resource-load-started",
+			G_CALLBACK(resource_load_started), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "notify::estimated-load-progress",
 			G_CALLBACK(uri_load_progress), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "create",
@@ -290,6 +301,8 @@ void view_list_create(void)
 			G_CALLBACK(button_release_event), NULL);
 		g_signal_connect(G_OBJECT(views[i]), "scroll-event",
 			G_CALLBACK(scroll_event), NULL);
+		g_signal_connect(G_OBJECT(views[i]), "context-menu",
+			G_CALLBACK(context_menu), NULL);
 
 		inspector = webkit_web_view_get_inspector(views[i]);
 		g_signal_connect(G_OBJECT(inspector), "bring-to-front",
@@ -304,6 +317,51 @@ void view_list_create(void)
 
 	efree(css);
 	efree(script);
+}
+
+static void resource_load_started(WebKitWebView *, WebKitWebResource *res,
+	WebKitURIRequest *)
+{
+	debug(D_DEBUG, "WebKitWebView", "signal :resource-load-started:");
+
+	g_signal_connect(G_OBJECT(res), "failed", G_CALLBACK(resource_load_failed), NULL);
+	g_signal_connect(G_OBJECT(res), "failed-with-tls-errors",
+		G_CALLBACK(resource_load_tls_failed), NULL);
+	g_signal_connect(G_OBJECT(res), "finished", G_CALLBACK(resource_finished), NULL);
+	g_signal_connect(G_OBJECT(res), "received-data",
+		G_CALLBACK(resource_received_data), NULL);
+}
+
+static void resource_load_failed(WebKitWebResource *, GError *err)
+{
+	debug(D_DEBUG, "WebKitWebResource", "signal :failed:");
+	debug(D_FOLD, "", "%i: %s", err->code, err->message);
+}
+
+static void resource_load_tls_failed(WebKitWebResource *, GTlsCertificate *,
+	GTlsCertificateFlags flags)
+{
+	debug(D_DEBUG, "WebKitWebResource", "signal :failed-with-tls-errors:");
+	debug(D_FOLD, "", "flags: %i", flags);
+}
+
+static void resource_finished(WebKitWebResource *)
+{
+	debug(D_DEBUG, "WebKitWebResource", "signal :finished:");
+}
+
+static void resource_received_data(WebKitWebResource *res, guint64)
+{
+	debug(D_DEBUG, "WebKitWebResource", "signal :received-data:");
+	debug(D_FOLD, "", "%s", webkit_web_resource_get_uri(res));
+}
+
+static int context_menu(WebKitWebView *, WebKitContextMenu *,
+	GdkEvent *, WebKitHitTestResult *)
+{
+	debug(D_DEBUG, "WebKitWebView", "signal :context-menu:");
+
+	return 0;
 }
 
 static int inspector_event(WebKitWebInspector *, int type)
@@ -333,8 +391,7 @@ static int scroll_event(GtkWidget *, GdkEvent *ev)
 	struct frame *f;
 	float x, y;
 
-	/* annoying hehe */
-	/*debug(D_DEBUG, "WebKitWebView", "signal :scroll-event:");*/
+	debug(D_DEBUG, "WebKitWebView", "signal :scroll-event:");
 
 	if (!gdk_event_get_scroll_deltas(ev, (double *)&x, (double *)&y)) {
 		return 0;
@@ -391,8 +448,6 @@ static void mouse_target_changed(WebKitWebView *, WebKitHitTestResult *ht, guint
 	WebKitHitTestResultContext htc;
 	struct frame *f;
 
-	/* annoying (too many) */
-	/*debug(D_DEBUG, "WebKitWebView", "signal :mouse-target:changed:");*/
 
 	f = current_frame_get();
 	htc = webkit_hit_test_result_get_context(ht);
@@ -406,6 +461,9 @@ static void mouse_target_changed(WebKitWebView *, WebKitHitTestResult *ht, guint
 		f->onuri = (char *)webkit_hit_test_result_get_media_uri(ht);
 	else
 		f->onuri = NULL;
+
+	debug(D_DEBUG, "WebKitWebView", "signal :mouse-target-changed:");
+	debug(D_FOLD, "", "%s", f->onuri);
 }
 
 static void view_crashed(WebKitWebView *, WebKitWebProcessTerminationReason r)
@@ -477,7 +535,8 @@ static void uri_changed(WebKitWebView *)
 		gtk_entry_set_text(e, uri);
 	}
 
-	debug(D_DEBUG, "WebKitWebView", "signal :load-changed: %s", uri);
+	debug(D_DEBUG, "WebKitWebView", "signal :load-changed:");
+	debug(D_FOLD, "", "%s", uri);
 
 	bookmark_image = GTK_IMAGE(gtk_builder_get_object(builder, "bookmark_image"));
 	if (bookmark_exists(uri)) {
