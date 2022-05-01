@@ -58,6 +58,7 @@ conf_opt *cfg_load(char *name)
 		CFG_BOOL("ddg_dark", cfg_true, CFGF_NONE),
 		CFG_BOOL("scrollbar", cfg_true, CFGF_NONE),
 		CFG_BOOL("debug", cfg_false, CFGF_NONE),
+		CFG_BOOL("url_filter", cfg_true, CFGF_NONE),
 		CFG_STR_LIST("workspace_1", "{}", CFGF_NONE),
 		CFG_STR_LIST("workspace_2", "{}", CFGF_NONE),
 		CFG_STR_LIST("workspace_3", "{}", CFGF_NONE),
@@ -99,11 +100,13 @@ conf_opt *cfg_load(char *name)
 	config[conf_permission_microphone].i = cfg_getint(cfg, "permission_microphone");
 	config[conf_permission_camera].i = cfg_getint(cfg, "permission_camera");
 	config[conf_search_engine].s = strdup(cfg_getstr(cfg, "search_engine"));
-	config[conf_secondary_search_engine].s = strdup(cfg_getstr(cfg, "secondary_search_engine"));
+	config[conf_secondary_search_engine].s = strdup(cfg_getstr(cfg,
+		"secondary_search_engine"));
 	config[conf_dark_mode].i = cfg_getbool(cfg, "dark_mode");
 	config[conf_ddg_dark].i = cfg_getbool(cfg, "ddg_dark");
 	config[conf_scrollbar].i = cfg_getbool(cfg, "scrollbar");
 	config[conf_debug].i = cfg_getbool(cfg, "debug");
+	config[conf_url_filter].i = cfg_getbool(cfg, "url_filter");
 
 	len = cfg_size(cfg, "cookie_filter");
 	config[conf_cookie_filter].p = ecalloc(len, sizeof(*config[conf_cookie_filter].p));

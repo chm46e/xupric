@@ -5,6 +5,7 @@ project('xupric', 'c',
 add_global_arguments('-Wno-pedantic', language : 'c')
 
 src = [
+  'src/fun/washer.c',
   'src/cfg/cfg.c',
   'src/cfg/config.c',
   'src/frame/offs/offs.c',
@@ -22,7 +23,7 @@ src = [
   'src/util/util.c',
   'src/xupric.c',
 ]
-incs = include_directories('src/')
+incs = include_directories('src/', 'lib/')
 
 cc = meson.get_compiler('c')
 cfg_lib_dirs = ['/usr/local/lib/', '/usr/lib', '/usr/share/lib']
@@ -31,6 +32,8 @@ sql_dep = dependency('sqlite3')
 gtk_dep = dependency('gtk+-3.0')
 x11_dep = dependency('x11', method: 'pkg-config')
 webkit_dep = dependency('webkit2gtk-4.0', method: 'pkg-config')
+json_dep = dependency('jansson', method: 'pkg-config')
+pcre_dep = dependency('libpcre', method: 'pkg-config')
 
 ldflags = ['-l:libconfuse.a', '-lgthread-2.0']
 
@@ -40,7 +43,7 @@ custom_target('before_build',
   build_by_default: true
 )
 
-exec = executable('xupric', sources: src, dependencies : [gtk_dep, x11_dep, webkit_dep, cfg_dep, sql_dep], include_directories: incs, install: true, build_by_default: true)
+exec = executable('xupric', sources: src, dependencies : [gtk_dep, x11_dep, webkit_dep, cfg_dep, json_dep, pcre_dep, sql_dep], include_directories: incs, install: true, build_by_default: true)
 
 custom_target('after_build',
   depends: exec,

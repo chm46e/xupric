@@ -8,6 +8,7 @@
 #include "cfg/cfg.h"
 #include "frame/frame.h"
 #include "fun/fun.h"
+#include "fun/washer.h"
 #include "frame/view.h"
 #include "frame/style/style.h"
 #include "util/atom.h"
@@ -67,10 +68,12 @@ static void setup(void)
 	history_init(cache_names[5]);
 	cookie_init(cache_names[0]);
 	style_init();
+	washer_init();
 }
 
 static void cleanup(void)
 {
+	washer_cleanup();
 	bookmark_cleanup();
 	history_cleanup();
 	cookie_cleanup();

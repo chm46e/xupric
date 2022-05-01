@@ -27,7 +27,8 @@ char *cache_names[] = {
 	"itp/",
 	"offline/",
 	"hsts/",
-	"history.db"
+	"history.db",
+	"lists/"
 };
 
 char **style_names;

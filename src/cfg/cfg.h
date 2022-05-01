@@ -20,6 +20,7 @@ typedef enum {
 	conf_search_engine, conf_secondary_search_engine,
 	conf_dark_mode, conf_ddg_dark,
 	conf_scrollbar, conf_debug,
+	conf_url_filter,
 	conf_workspace_1, conf_workspace_2,
 	conf_workspace_3, conf_workspace_4,
 	conf_workspace_5,

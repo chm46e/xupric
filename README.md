@@ -19,14 +19,15 @@ Moderately inspired by surf.
 ### Dependencies
 * <a href="https://github.com/libconfuse/libconfuse">confuse</a> \<required\>
 * webkit2gtk-4.0 \<required\>
+* <a href="https://www.nerdfonts.com/font-downloads">JetBrainsMono Nerd Font</a> \<very recommended\>
+* <a href="https://github.com/cbrnix/Flatery">Flatery-Dark icon theme</a> \<very recommended\>
+* jansson \<required\>
+* pcre \<required\>
 * xxd \<required\>
 * sqlite3 \<required\>
 * meson \<required\>
 * x11 \<required\>
 * gtk3 \<required\>
-* <a href="https://www.nerdfonts.com/font-downloads">JetBrainsMono Nerd Font</a> \<recommended\>
-* <a href="https://github.com/cbrnix/Flatery">Flatery-Dark icon theme</a> \<recommended\>
-* appmenu-gtk-module \<optional\>
 
 NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 

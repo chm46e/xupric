@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "fun/fun.h"
+#include "fun/washer.h"
 #include "fun/sql/bookmark.h"
 #include "fun/sql/history.h"
 #include "frame/frame.h"
@@ -531,6 +532,9 @@ static void uri_changed(WebKitWebView *)
 	e = GTK_ENTRY(gtk_builder_get_object(builder, "bar_uri_entry"));
 	uri = uri_get(current_frame_get());
 	css = gtk_css_provider_new();
+
+	uri = washer_clean(uri);
+
 	if (strcmp(gtk_entry_get_text(e), uri)) {
 		gtk_entry_set_text(e, uri);
 	}
