@@ -1,26 +1,27 @@
-## <img src="res/xupric.png" width=20> Xupric
-__Screw it, imma work a bit more aka it's horrible:D\
-Couldn't even last 3 days.__
+## <img src="res/xupric.png" width=18> Xupric
 
-A Modern Web Browser based on webkit2gtk.\
-Moderately inspired by surf.
+Xupric is a fully functional Web browser.\
+The features and look was inspired by surf, Firefox and DuckDuckGo's Privacy Browser.\
+It's goal was to implement all the features you'd expect from a today's browser,\
+while keeping a nice, dark, non-GTK look, to go along with any wm.\
+It was written from scratch and isn't a fork.
 
 ### Features
 * Functional web searching
 * Tabs support (10 static tabs)
-* Configuration through ~/.config/xupric/xupric.conf
-* CSS styling in ~/.config/xupric/styles/
-* Dark mode (disabled by default)
-* Shortcut keys
-* Custom Menu & Navigation Bar
+* Custom GTK ui
+* Dark mode
+* Workspaces (max 5)
+* Url filtering like clearURLs
+* a Ton of Shortcut keys
 * Bookmarks, history, cookies
+* Configuration through ~/.config/xupric/xupric.conf
+* Custom css/js/certs in ~/.config/xupric/
 * & much more
 
 ### Dependencies
 * <a href="https://github.com/libconfuse/libconfuse">confuse</a> \<required\>
 * webkit2gtk-4.0 \<required\>
-* <a href="https://www.nerdfonts.com/font-downloads">JetBrainsMono Nerd Font</a> \<very recommended\>
-* <a href="https://github.com/cbrnix/Flatery">Flatery-Dark icon theme</a> \<very recommended\>
 * jansson \<required\>
 * pcre \<required\>
 * xxd \<required\>
@@ -28,79 +29,36 @@ Moderately inspired by surf.
 * meson \<required\>
 * x11 \<required\>
 * gtk3 \<required\>
+* <a href="https://www.nerdfonts.com/font-downloads">JetBrainsMono Nerd Font</a> \<very recommended\>
+* <a href="https://github.com/cbrnix/Flatery">Flatery-Dark icon theme</a> \<very recommended\>
 
-NB! Gtk4 and webkit2gtk-5.0 __aren't__ supported.
+__Without the nerd font, the browser looks very weird.__\
+Gtk4 and webkit2gtk-5.0 __aren't__ supported.
 
 ### Install
 ```sh
+> git clone https://github.com/chm46e/xupric
+> cd xupric
 > mkdir build && cd build
 > meson ..
 > ninja
 > sudo ninja install
 ```
+__NB! Have a look at the man page!__ ```man xupric```\
+It goes over everything (shortcuts, features, etc).
 
 ### Showcase
 <img src="res/previews/xupric_start.png">
-<img src="res/previews/xupric_menu.png">
 <img src="res/previews/xupric_wiki.png">
-
-### Keyboard Shortcuts
-| KEY            | Action           |
-| ------         | -----            |
-| alt+q          | quit             |
-| ctrl+r         | reload           |
-| ctrl+shift+r   | reload -cache    |
-| F5             | reload           |
-| ctrl+f         | start find       |
-| ctrl+n         | find next        |
-| ctrl+shift+n   | find previous    |
-| ctrl+b         | bookmark toggle  |
-| ctrl+d         | dark mode toggle |
-| ctrl+shift+d   | debug toggle     |
-| ctrl+s         | download page    |
-| alt+s          | uri entry focus  |
-| alt+shift+s    | uri secondary entry focus|
-| alt+w          | open new window  |
-| Esc            | stop (uri,find,fullscreen)|
-| F11            | fullscreen toggle|
-| alt+f          | fullscreen toggle|
-| alt+h          | goto home/start  |
-| alt+Left       | go backwards     |
-| alt+Right      | go forwards      |
-| ctrl+equal     | zoom in          |
-| ctrl+minus     | zoom out         |
-| ctrl+0         | zoom reset       |
-| ctrl+Tab       | next tab         |
-| ctrl+shift_Tab | previous tab     |
-| alt+(1-0)      | switch to tab (1-0)|
-| ctrl+i         | toggle webinspector|
-| C+S+A+a        | load amazon.com   |
-| C+S+A+d        | load discord.com  |
-| C+S+A+e        | load ebay.com     |
-| C+S+A+g        | load github.com   |
-| C+S+A+i        | load twitter.com  |
-| C+S+A+m        | load mail.zoho.com|
-| C+S+A+n        | load netflix.com  |
-| C+S+A+o        | load odysee.com   |
-| C+S+A+r        | load reddit.com   |
-| C+S+A+t        | load trello.com   |
-| C+S+A+w        | load wikipedia.org|
-| C+S+A+y        | load youtube.com  |
-| C+S+A+(1-5)    | switch to workspace (1-5)|
-
-Tab (10 max) switching is done with alt+(tab_number from 1->0)
-
-### Configuration
-Most of the configuration is done through ~/.config/xupric/xupric.conf.\
-And the styles are in ~/.config/xupric/styles/
+<img src="res/previews/xupric_menu.png">
 
 ### Credits
 Thank you, <a href="https://github.com/Tux-Code">Tux-Code</a> for creating the logos.
 
 ### Notes
 The default xupric is styled using the <a href="https://github.com/ChrisKempson/Tomorrow-Theme">Tomorrow Night</a> color theme.\
-The cache is stored in ~/.cache/xupric/\
+The configuration stuff is stored in ~/.config/xupric/\
 Almost all the files/dirs get generated during run-time.\
 The coding style is somewhat a lazy Linux kernel like.\
-My intention was to make it not look like a gtk application.\
+Again, have a look at xupric's man page:D\
 There are a ton of bugs, so hold your teddy bear.
