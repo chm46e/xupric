@@ -176,6 +176,8 @@ void view_list_create(void)
 		config[conf_ephemeral].i ? WEBKIT_CACHE_MODEL_WEB_BROWSER :
 		WEBKIT_CACHE_MODEL_DOCUMENT_VIEWER);
 
+	webkit_web_context_set_web_extensions_directory(context, config_names[8]);
+
 	if (!config[conf_ephemeral].i) {
 		if (config[conf_cookie_policy].i == 0)
 			webkit_cookie_manager_set_accept_policy(cookiemanager,

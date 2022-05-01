@@ -18,7 +18,8 @@ char *config_names[] = {
 	"styles/app/dark_mode.css",
 	"styles/app/scrollbar.css",
 	"styles/app/main.css",
-	"bookmarks.db"
+	"bookmarks.db",
+	"extensions/"
 };
 
 char *cache_names[] = {
