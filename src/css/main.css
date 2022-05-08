@@ -23,6 +23,19 @@ colorchooser * {
 	all: initial;
 }
 
+messagedialog box * {
+	all: initial;
+	color: @text;
+	font-family: "JetBrainsMono Nerd Font", sans-serif;
+	background-color: @main;
+	border-radius: 7px;
+}
+
+messagedialog box * entry {
+	border-radius: 7px;
+	background-color: @main_hover;
+}
+
 #bar_uri_entry, #bar_uri_entry_secondary, entry {
 	background-color: @uri;
 	box-shadow: 0 0 1px @uri_hover;
