@@ -23,7 +23,7 @@ src = [
   'src/util/util.c',
   'src/xupric.c',
 ]
-incs = include_directories('src/', 'lib/')
+incs = include_directories('src/')
 
 cc = meson.get_compiler('c')
 cfg_lib_dirs = ['/usr/local/lib/', '/usr/lib', '/usr/share/lib']
