@@ -47,8 +47,6 @@ void frame_list_create(void)
 	gtk_window_set_default_size(GTK_WINDOW(win), 1200, 800);
 	gtk_window_resize(GTK_WINDOW(win), 1200, 800);
 
-	random_message();
-
 	view_list_create();
 
 	for (int i = 0; i < 10; i++) {

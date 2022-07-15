@@ -177,25 +177,3 @@ void toggle_webinspector(void)
 		f->inspector = 1;
 	}
 }
-
-static char *messages[] = {
-"Shoot for the moon,\neven if you fail,\nyou'll land among the stars.",
-"DELETE FROM coder\nWHERE life = true AND\nsleep = true;",
-"repeat:\n  Eat. Code. Cry;\n  goto repeat;",
-"printf(\"here\");\nprintf(\"why\");\nprintf(\"ArjXyAgiaoaa\");",
-"How to center a <div>?\nSpaces versus Tabs?\nVim or Emacs?",
-"I don't know why\n my code works.\nIt's magic..",
-"<?php\nIt's scary right?\n I know..",
-"Computers in the future may\nweigh no more than 1.5 tons.\nPopular Mechanics (1949)",
-"a programmer:\nturns a five hour task\ninto a 5 month task."
-};
-
-
-void random_message(void)
-{
-	GtkLabel *label;
-
-	srand(time(0));
-	label = GTK_LABEL(gtk_builder_get_object(builder_get(), "menu_note_label"));
-	gtk_label_set_text(label, messages[rand() % 9]);
-}
