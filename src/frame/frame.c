@@ -44,7 +44,9 @@ void frame_list_create(void)
 	g_signal_connect(win, "key-press-event", G_CALLBACK(window_event_handle), NULL);
 	g_signal_connect(win, "window-state-event", G_CALLBACK(window_event_handle), NULL);
 
-	gtk_window_maximize(GTK_WINDOW(win));
+	gtk_window_set_default_size(GTK_WINDOW(win), 1200, 800);
+	gtk_window_resize(GTK_WINDOW(win), 1200, 800);
+
 	random_message();
 
 	view_list_create();
