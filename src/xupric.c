@@ -59,10 +59,10 @@ static void setup(void)
 		debug(D_WARN, "signal", "failed to install the SIGINT handler");
 	sigchld();
 
-	xdisplay_create();
 	gtk_init(NULL, NULL);
 
 	config_cache_create();
+	xdisplay_create();
 	atoms_init();
 	bookmark_init(config_names[7]);
 	history_init(cache_names[5]);

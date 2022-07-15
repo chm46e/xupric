@@ -3,7 +3,7 @@
 
 typedef enum {
 	conf_cache_prefix, conf_ephemeral,
-	conf_history_autoremove,
+	conf_history_autoremove, conf_wayland,
 	conf_java, conf_javascript,
 	conf_xss_auditor, conf_js_auto_popups,
 	conf_font_family, conf_font_size,

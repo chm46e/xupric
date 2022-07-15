@@ -17,6 +17,7 @@ It was written from scratch and isn't a fork.
 * Bookmarks, history, cookies
 * Configuration through ~/.config/xupric/xupric.conf
 * Custom css/js/certs in ~/.config/xupric/
+* Xorg and native Wayland support
 * & much more
 
 ### Dependencies

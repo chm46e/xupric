@@ -3,6 +3,7 @@
 
 #include <string.h>
 
+#include "cfg/cfg.h"
 #include "util/util.h"
 #include "frame/frame.h"
 
@@ -14,6 +15,11 @@ static int allow_atoms = 1;
 
 void xdisplay_create(void)
 {
+	if (cfg_get()[conf_wayland].i == 1) {
+		allow_atoms = 0;
+		return;
+	}
+	
 	if (!(dpy = XOpenDisplay(NULL))) {
 		debug(D_WARN, "XOpenDisplay", "failed to open the display");
 		debug(D_FOLD, "", "Atoms - disabled");
@@ -23,7 +29,8 @@ void xdisplay_create(void)
 
 void xdisplay_close(void)
 {
-	XCloseDisplay(dpy);
+	if (allow_atoms) 
+		XCloseDisplay(dpy);
 }
 
 void atoms_init(void)
