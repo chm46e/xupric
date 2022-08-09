@@ -1,3 +1,4 @@
 build/
 src/frame/main_ui.h
 src/frame/main.ui\~
+.cache

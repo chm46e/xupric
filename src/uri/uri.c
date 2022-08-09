@@ -102,7 +102,8 @@ void uri_custom_load(struct frame *f, char *uri, int secondary)
 			efree(rpath);
 		} else if (strstr(uri, ".com") ||
 			strstr(uri, ".org") ||
-			strstr(uri, ".net")) {
+			strstr(uri, ".net") ||
+			strstr(uri, ".io")){
 			url = g_strdup_printf("https://%s", uri);
 		} else {
 			if (secondary)
